@@ -27,6 +27,10 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
+# Normalise to an absolute path so Substring-based relative-path derivation
+# below matches the absolute FullName the generator emits (CI passes -Root .).
+$Root = (Resolve-Path -LiteralPath $Root).Path
+
 $generator = Join-Path $Root 'tools/Build-KnowledgeIndex.ps1'
 if (-not (Test-Path $generator)) { throw "Generator not found: $generator" }
 

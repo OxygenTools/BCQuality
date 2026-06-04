@@ -79,6 +79,10 @@ if (-not $BCQualityRoot) {
 if (-not (Test-Path $BCQualityRoot)) {
     throw "BCQuality root not found: $BCQualityRoot"
 }
+# Normalise to an absolute path: Get-ChildItem.FullName below is always
+# absolute, so Get-RelativePath's Substring needs an absolute root to strip.
+# A relative root (e.g. '.') would otherwise leave the full path intact.
+$BCQualityRoot = (Resolve-Path -LiteralPath $BCQualityRoot).Path
 if (-not $IndexPath) {
     $IndexPath = Join-Path $BCQualityRoot 'knowledge-index.json'
 }
