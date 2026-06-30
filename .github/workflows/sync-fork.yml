@@ -22,7 +22,7 @@ jobs:
       - name: Sync from upstream
         env:
           # IMPORTANT: change this to the original source repository
-          UPSTREAM_REPO: "ORIGINAL_OWNER/ORIGINAL_REPO"
+          UPSTREAM_REPO: "microsoft/BCQuality"
           # Optional: set your branch explicitly if not default branch behavior
           TARGET_BRANCH: "main"
         run: |
