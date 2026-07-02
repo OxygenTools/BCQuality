@@ -21,9 +21,7 @@ jobs:
 
       - name: Sync from upstream
         env:
-          # IMPORTANT: change this to the original source repository
           UPSTREAM_REPO: "microsoft/BCQuality"
-          # Optional: set your branch explicitly if not default branch behavior
           TARGET_BRANCH: "main"
         run: |
           set -euo pipefail
@@ -31,22 +29,15 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Ensure we're on target branch
           git checkout "${TARGET_BRANCH}"
 
-          # Add/update upstream remote
           if git remote get-url upstream >/dev/null 2>&1; then
             git remote set-url upstream "https://github.com/${UPSTREAM_REPO}.git"
           else
             git remote add upstream "https://github.com/${UPSTREAM_REPO}.git"
           fi
 
-          # Fetch and fast-forward only
           git fetch upstream
-          git merge --ff-only "upstream/${TARGET_BRANCH}" || {
-            echo "Fast-forward failed (diverged history). Manual intervention required."
-            exit 1
-          }
-
-          # Push only if branch moved
+          git rebase "upstream/${TARGET_BRANCH}"
+          git push --force-with-lease origin "${TARGET_BRANCH}"
           git push origin "${TARGET_BRANCH}"
