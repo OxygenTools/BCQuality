@@ -23,4 +23,6 @@ See sample: `cmfrt-onbefore-onafter-all-globals.good.al`.
 
 Publishing a global procedure without both `OnBefore` and `OnAfter` integration events, or adding events only after a downstream extension explicitly requests an extension point. A global procedure with no event bracket is a black box: dependent extensions cannot inject logic around it without an AL override, which is a breaking pattern. Adding events later is itself a non-breaking change but causes unnecessary churn and review cycles.
 
+The inverse is equally a violation: event declarations that nothing raises. An `[IntegrationEvent]` declared but never called from any procedure, or a wrapper procedure (for example a `[TryFunction]` insert wrapper) that no caller invokes, is dead code that advertises an extension point which never fires. Wire the event into the owning procedure or delete the declaration and its plumbing.
+
 See sample: `cmfrt-onbefore-onafter-all-globals.bad.al`.
