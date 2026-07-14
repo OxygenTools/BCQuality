@@ -1,0 +1,41 @@
+name: Sync fork with upstream
+
+on:
+  schedule:
+    - cron: "0 3 * * *"   # Daily 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork default branch
+        uses: actions/checkout@v5           # Node 24; clears deprecation warning
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_PAT }}    # PAT: contents:write + workflows:write
+
+      - name: Sync from upstream
+        env:
+          UPSTREAM_REPO: "microsoft/BCQuality"
+          TARGET_BRANCH: "main"
+        run: |
+          set -euo pipefail
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout "${TARGET_BRANCH}"
+
+          if git remote get-url upstream >/dev/null 2>&1; then
+            git remote set-url upstream "https://github.com/${UPSTREAM_REPO}.git"
+          else
+            git remote add upstream "https://github.com/${UPSTREAM_REPO}.git"
+          fi
+
+          git fetch upstream
+          git merge --no-edit "upstream/${TARGET_BRANCH}"   # keeps your commits; no force-push
+          git push origin "${TARGET_BRANCH}"
