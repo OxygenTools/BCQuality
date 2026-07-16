@@ -85,7 +85,10 @@ Before opening a pull request:
 - No fenced code blocks.
 - File is under 100 lines.
 - File covers one concern.
+- Frontmatter `domain` exactly matches the containing domain folder.
 - File is in the correct layer and domain folder.
 - Name is kebab-case and descriptive.
+- Every companion sample is referenced by filename from the article, and every referenced sample exists.
+- Every review-leaf domain has at least one article with both `.good.al` and `.bad.al` companions; the evaluation harness derives positive and clean controls from that convention automatically.
 
 Agents scaffolding new files SHOULD run this checklist programmatically before emitting the file.
