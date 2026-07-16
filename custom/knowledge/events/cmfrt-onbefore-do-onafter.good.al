@@ -6,20 +6,18 @@ codeunit 55043 "CMFRT AQ FS ProForma Meth"
     begin
         IsHandled := false;
         OnBeforeCMFRTAQFSResolveItemToGLAcc(SalesLine, IsHandled);
-        if IsHandled then
-            exit;
-
-        DoCMFRTAQFSResolveItemToGLAcc(SalesLine);
-
+        DoCMFRTAQFSResolveItemToGLAcc(SalesLine, IsHandled);
         OnAfterCMFRTAQFSResolveItemToGLAcc(SalesLine);
     end;
 
-    local procedure DoCMFRTAQFSResolveItemToGLAcc(var SalesLine: Record "Sales Line")
+    local procedure DoCMFRTAQFSResolveItemToGLAcc(var SalesLine: Record "Sales Line"; IsHandled: Boolean)
     var
         Item: Record Item;
         GeneralPostingSetup: Record "General Posting Setup";
         ItemNotFoundErr: Label 'Item %1 was not found.', Comment = '%1 = Item No.';
     begin
+        if IsHandled then
+            exit;
         Item.SetLoadFields("No.", "Gen. Prod. Posting Group", Description);
         if not Item.Get(SalesLine."CMFRT AQ FS Item No.") then
             Error(ItemNotFoundErr, SalesLine."CMFRT AQ FS Item No.");
