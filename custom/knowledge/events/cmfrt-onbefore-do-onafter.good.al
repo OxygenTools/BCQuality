@@ -4,7 +4,6 @@ codeunit 55043 "CMFRT AQ FS ProForma Meth"
     var
         IsHandled: Boolean;
     begin
-        IsHandled := false;
         OnBeforeCMFRTAQFSResolveItemToGLAcc(SalesLine, IsHandled);
         DoCMFRTAQFSResolveItemToGLAcc(SalesLine, IsHandled);
         OnAfterCMFRTAQFSResolveItemToGLAcc(SalesLine);
