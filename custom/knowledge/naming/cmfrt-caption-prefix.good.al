@@ -27,6 +27,7 @@ page 55020 "CMFRT AQ Setup"
 
 enum 55040 "CMFRT AQ Buffer Status"
 {
-    value(55000; "CMFRT AQ Pending") { Caption = 'CMFRT AQ Pending'; }
-    value(55001; "CMFRT AQ Processed") { Caption = 'CMFRT AQ Processed'; }
+    value(55000; "CMFRT AQ None") { Caption = 'CMFRT AQ Blanc'; }
+    value(55001; "CMFRT AQ Pending") { Caption = 'CMFRT AQ Pending'; }
+    value(55002; "CMFRT AQ Processed") { Caption = 'CMFRT AQ Processed'; }
 }
