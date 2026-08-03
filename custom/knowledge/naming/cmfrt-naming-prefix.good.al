@@ -27,3 +27,25 @@ codeunit 2045700 "CMFRT GD Job Mgmt"
     begin
     end;
 }
+
+// The test app follows the same rule — test, handler, and helper procedures all carry the prefix.
+codeunit 2045750 "CMFRT GD Job Mgmt Tests"
+{
+    Subtype = Test;
+
+    [Test]
+    [HandlerFunctions('CMFRTGDHandlePOIConfirm')]
+    procedure CMFRTGDLinkJobToPOISetsPOIId()
+    begin
+    end;
+
+    [ConfirmHandler]
+    procedure CMFRTGDHandlePOIConfirm(Question: Text[1024]; var Reply: Boolean)
+    begin
+        Reply := true;
+    end;
+
+    local procedure CMFRTGDCreateJobWithPOI(var Job: Record Job)
+    begin
+    end;
+}
