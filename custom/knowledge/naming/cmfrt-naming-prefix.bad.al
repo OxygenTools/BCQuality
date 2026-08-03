@@ -27,3 +27,25 @@ codeunit 2045700 "Job Management"
     begin
     end;
 }
+
+// The test app is not exempt — unprefixed test, handler, and helper procedures are the same violation.
+codeunit 2045750 "Job Mgmt Tests"
+{
+    Subtype = Test;
+
+    [Test]
+    [HandlerFunctions('HandlePOIConfirm')]
+    procedure LinkJobToPOI()
+    begin
+    end;
+
+    [ConfirmHandler]
+    procedure HandlePOIConfirm(Question: Text[1024]; var Reply: Boolean)
+    begin
+        Reply := true;
+    end;
+
+    local procedure CreateJobWithPOI(var Job: Record Job)
+    begin
+    end;
+}
