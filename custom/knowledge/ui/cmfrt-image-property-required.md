@@ -1,7 +1,7 @@
 ---
 bc-version: [all]
 domain: ui
-keywords: [ui, image, icon, bcicons, page-field, page-action, action-group, fileuploadaction, cuegroup, AW0005]
+keywords: [ui, image, icon, bcicons, page-field, page-action, action-group, fileuploadaction, cuegroup, aw0005]
 technologies: [al]
 countries: [w1]
 application-area: [all]
