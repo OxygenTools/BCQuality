@@ -1,7 +1,7 @@
 ---
 bc-version: [all]
 domain: naming
-keywords: [naming, prefix, cmfrt, object-name, procedure-name, field-name, abbreviation, test-app, test-codeunit, Test, HandlerFunctions]
+keywords: [naming, prefix, cmfrt, object-name, procedure-name, field-name, abbreviation, test-app, test-codeunit, handler-functions]
 technologies: [al]
 countries: [w1]
 application-area: [all]
