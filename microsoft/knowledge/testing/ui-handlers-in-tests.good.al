@@ -8,7 +8,7 @@ codeunit 50400 "Test UI Handler Capture Good"
     var
         Customer: Record Customer;
     begin
-        Customer.Get('10000');
+        LibrarySales.CreateCustomer(Customer);
         CapturedCustomerNo := '';
 
         Page.RunModal(Page::"Customer Card", Customer);
@@ -24,5 +24,6 @@ codeunit 50400 "Test UI Handler Capture Good"
 
     var
         Assert: Codeunit "Library Assert";
+        LibrarySales: Codeunit "Library - Sales";
         CapturedCustomerNo: Code[20];
 }

@@ -4,19 +4,18 @@ codeunit 50240 "IsHandled Init Good Sample"
     procedure ApplyDiscounts(var SalesHeader: Record "Sales Header")
     var
         DiscountPct: Decimal;
-        IsHandled: Boolean;
+        HeaderIsHandled: Boolean;
+        PaymentIsHandled: Boolean;
     begin
-        // A freshly declared local Boolean is false.
-        OnBeforeApplyHeaderDiscount(SalesHeader, DiscountPct, IsHandled);
-        if IsHandled then
-            exit;
-        DiscountPct := 5;
+        // Each fresh local is false and belongs to one non-looping raise.
+        OnBeforeApplyHeaderDiscount(SalesHeader, DiscountPct, HeaderIsHandled);
+        if not HeaderIsHandled then
+            DiscountPct := 5;
 
-        // Reaching this point proves that IsHandled is still false.
-        OnBeforeApplyPaymentDiscount(SalesHeader, DiscountPct, IsHandled);
-        if IsHandled then
-            exit;
-        DiscountPct += 2;
+        // Handling the header event does not suppress this independent seam.
+        OnBeforeApplyPaymentDiscount(SalesHeader, DiscountPct, PaymentIsHandled);
+        if not PaymentIsHandled then
+            DiscountPct += 2;
     end;
 
     [IntegrationEvent(false, false)]

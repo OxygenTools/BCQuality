@@ -17,6 +17,20 @@ codeunit 50241 "IsHandled Init Bad Sample"
             DiscountPct += 2;
     end;
 
+    procedure ApplyLineDiscounts(var SalesLine: Record "Sales Line")
+    var
+        LineIsHandled: Boolean;
+    begin
+        if SalesLine.FindSet() then
+            repeat
+                // Bug: the local initializes only once. A subscriber that handles
+                // one line leaves true for every later iteration.
+                OnBeforeApplyLineDiscount(SalesLine, LineIsHandled);
+                if not LineIsHandled then
+                    SalesLine.Validate("Line Discount %", 5);
+            until SalesLine.Next() = 0;
+    end;
+
     [IntegrationEvent(false, false)]
     local procedure OnBeforeApplyHeaderDiscount(var SalesHeader: Record "Sales Header"; var DiscountPct: Decimal; var IsHandled: Boolean)
     begin
@@ -24,6 +38,11 @@ codeunit 50241 "IsHandled Init Bad Sample"
 
     [IntegrationEvent(false, false)]
     local procedure OnBeforeApplyPaymentDiscount(var SalesHeader: Record "Sales Header"; var DiscountPct: Decimal; var IsHandled: Boolean)
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnBeforeApplyLineDiscount(var SalesLine: Record "Sales Line"; var IsHandled: Boolean)
     begin
     end;
 }

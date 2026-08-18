@@ -19,7 +19,11 @@ codeunit 50128 "Perf Sample CommitInLoop Good"
         NormalizeState: Record "Perf Normalize State";
         LastCustomerNo: Code[20];
     begin
-        NormalizeState.Get('CUSTOMER');
+        if not NormalizeState.Get('CUSTOMER') then begin
+            NormalizeState.Init();
+            NormalizeState.Code := 'CUSTOMER';
+            NormalizeState.Insert();
+        end;
         LastCustomerNo := NormalizeState."Last Customer No.";
 
         while NormalizeNextChunk(LastCustomerNo) do begin
