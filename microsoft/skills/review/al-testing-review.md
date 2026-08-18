@@ -50,7 +50,7 @@ The following targeted checks cover every current `testing` article. Treat each 
 - A permission-sensitive test uses `TestPermissions = Disabled`, claims to test a restricted user without `"Permissions Mock"`/`"Library - Lower Permissions"`, or declares `[TestPermissions(...)]` without applying that context — `permission-tests-must-lower-the-execution-context`.
 - Test fixture code manually calls `Init`/`Insert`, invents keys or prerequisite records, or bypasses available `LibrarySales`, `LibraryPurchase`, `LibraryERM`, `LibraryInventory`, `LibraryRandom`, or equivalent library codeunits — `use-library-codeunits-for-test-fixtures`.
 - `asserterror` is added or changed without a following `Assert.ExpectedError`, `Assert.ExpectedErrorCode`, or a purpose-built assertion such as `ExpectedTestFieldError` — `asserterror-needs-expectederror-and-code`.
-- A test path raises UI, `[HandlerFunctions(...)]` does not exactly match the invoked handlers, a handler hardcodes replies instead of using enqueue/dequeue expectations, or `LibraryVariableStorage.Clear`/`AssertEmpty` is missing — `ui-handlers-in-tests`.
+- A test path raises UI and `[HandlerFunctions(...)]` does not match the invoked handlers, or the test has no meaningful evidence of the UI result (for example, it treats a Boolean set before the action as proof of success) — `ui-handlers-in-tests`. A capture/reset/assert-after-`RunModal` pattern is valid. Enqueue/dequeue and `AssertEmpty` are required only when order, count, text, replies, or a scripted sequence is part of the contract.
 
 Once the candidate worklist is known, resolve layer-precedence conflicts per READ. Drop lower-precedence files whose normative guidance (`## Best Practice` or `## Anti Pattern`) directly contradicts a higher-precedence candidate, and record each dropped file in `suppressed` with `reason: "layer-precedence"`. Files that would have been candidates but are hidden because their layer is disabled in consumer configuration are recorded with `reason: "configuration"`. Files that never became candidates are NOT recorded in `suppressed`.
 
@@ -63,6 +63,8 @@ For each worklist entry, evaluate the diff against the file's `## Best Practice`
 - When the diff contains a clear match for an Anti Pattern, emit a finding with severity `major` or `blocker`, a message summarizing the anti-pattern, `location` pointing to the offending line or range, and a `references` entry pointing to the knowledge file. Use `blocker` only when the test can pass while verifying the wrong behavior or can leave committed data that contaminates later tests; otherwise the ceiling is `major`.
 - When the diff contains code that contradicts a Best Practice without being a full anti-pattern, emit `minor` with the same reference shape.
 - Applicability alone is not a finding. Emit `info` only for a concrete, non-actionable observation the article explicitly defines; otherwise emit nothing when no violation is present.
+
+For `ui-handlers-in-tests`, use `major` when missing or incorrectly listed handlers make the test fail at runtime. Use `minor` when the test executes but lacks a meaningful semantic postcondition, including a pre-set Boolean used as proof. Do not escalate solely because a handler does not use queue storage or asserts inside the handler.
 
 Set `confidence` to:
 

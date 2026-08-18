@@ -6,17 +6,17 @@ codeunit 50240 "IsHandled Init Good Sample"
         DiscountPct: Decimal;
         IsHandled: Boolean;
     begin
-        IsHandled := false;
+        // A freshly declared local Boolean is false.
         OnBeforeApplyHeaderDiscount(SalesHeader, DiscountPct, IsHandled);
-        if not IsHandled then
-            DiscountPct := 5;
+        if IsHandled then
+            exit;
+        DiscountPct := 5;
 
-        // Reset before reusing the same variable for the next event so a
-        // subscriber that handled the first raise can't suppress this one.
-        IsHandled := false;
+        // Reaching this point proves that IsHandled is still false.
         OnBeforeApplyPaymentDiscount(SalesHeader, DiscountPct, IsHandled);
-        if not IsHandled then
-            DiscountPct += 2;
+        if IsHandled then
+            exit;
+        DiscountPct += 2;
     end;
 
     [IntegrationEvent(false, false)]
