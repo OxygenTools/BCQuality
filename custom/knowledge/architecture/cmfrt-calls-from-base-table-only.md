@@ -15,7 +15,7 @@ In the CMFRT extension architecture, all calls to implementation codeunits must 
 
 ## Best Practice
 
-When a subscriber codeunit handles an event and needs to trigger a CMFRT operation, it calls the relevant base-table procedure. When a page action initiates business logic, it calls the base-table procedure. The implementation codeunit is an internal detail of the base table and should never appear in `using` clauses or variable declarations of pages, reports, or subscriber codeunits.
+When a subscriber codeunit handles an event and needs to trigger a CMFRT operation, it calls the relevant base-table procedure. When a page action initiates business logic, it calls the base-table procedure. The implementation codeunit is an internal detail of the base table and should never appear in the variable declarations of pages, reports, or subscriber codeunits.
 
 See sample: `cmfrt-calls-from-base-table-only.good.al`.
 

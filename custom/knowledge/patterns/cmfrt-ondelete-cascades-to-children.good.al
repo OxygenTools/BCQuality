@@ -1,9 +1,3 @@
-namespace Astena.CMFRT.GD;
-
-// Verify this namespace against the symbols the app compiles against — see
-// patterns/cmfrt-namespace-using-directives.md.
-using Microsoft.Sales.Customer;
-
 // The owned parent cascades to EVERY dependent table, not only the lines.
 table 2045750 "CMFRT GD POI Header"
 {
