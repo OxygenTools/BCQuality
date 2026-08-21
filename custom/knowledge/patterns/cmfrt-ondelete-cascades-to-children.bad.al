@@ -1,5 +1,3 @@
-namespace Astena.CMFRT.GD;
-
 // Anti-pattern: a header table with no OnDelete trigger. TableRelation on the line
 // table (below) validates that the header exists when a line is written — it never
 // deletes anything. Deleting this header leaves every line, log row, and comment in
