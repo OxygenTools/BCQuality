@@ -1,0 +1,53 @@
+{
+  "id": "9a3d1f42-77c1-4d1a-9e6a-2b0c5f8e41aa",
+  "name": "CMFRT_AdresMgmnt_Test",
+  "publisher": "CMFRT",
+  "version": "1.0.0.0",
+  "platform": "28.0.0.0",
+  "application": "28.0.0.0",
+  "runtime": "17.0",
+  "idRanges": [
+    {
+      "from": 2045700,
+      "to": 2045799
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "2f2ae7a9-6b6c-4f3e-8f21-9c0a1b8d3e77",
+      "name": "CMFRT_AdresMgmnt",
+      "publisher": "CMFRT",
+      "version": "1.0.0.0"
+    },
+    {
+      "id": "dd0be2ea-f733-4d65-bb34-a28f4624fb14",
+      "name": "Library Assert",
+      "publisher": "Microsoft",
+      "version": "18.0.0.0"
+    },
+    {
+      "id": "e7320ebb-08b3-4406-b1ec-b4927d3e280b",
+      "name": "Any",
+      "publisher": "Microsoft",
+      "version": "18.0.0.0"
+    },
+    {
+      "id": "23de40a6-dfe8-4f80-80db-d70f83ce8caf",
+      "name": "Test Runner",
+      "publisher": "Microsoft",
+      "version": "18.0.0.0"
+    },
+    {
+      "id": "9856ae4f-d1a7-46ef-89bb-6ef056398228",
+      "name": "System Application Test Library",
+      "publisher": "Microsoft",
+      "version": "18.0.0.0"
+    },
+    {
+      "id": "5d86850b-0d76-4eca-bd7b-951ad998e997",
+      "name": "Tests-TestLibraries",
+      "publisher": "Microsoft",
+      "version": "18.0.0.0"
+    }
+  ]
+}
