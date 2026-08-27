@@ -13,7 +13,7 @@ application-area: [all]
 
 Every object, field, and procedure in a CMFRT extension must carry the `CMFRT XXX` prefix, where `XXX` is the product or customer abbreviation (for example `GD` for Geodynamics, `BA` for Batch Automation, `JO` for Jobs). The prefix applies to tables, table extensions, pages, page extensions, codeunits, interfaces, reports, enum values, and to all global and local procedures. Object and field names use the three-part form `CMFRT <ABBR> <Descriptive Name>` with spaces. Procedure names use the concatenated form `CMFRT<ABBR><ProcedureName>` with no spaces.
 
-The rule is identical in the companion test app (`<AppName>_Test`). Test codeunits, and every procedure inside them, carry the same prefix: `[Test]` procedures, `[HandlerFunctions]` handlers, `[MessageHandler]`/`[ConfirmHandler]`/`[ModalPageHandler]` procedures, `[Scope('OnPrem')]` helpers, and local setup or assertion helpers. The test app is not exempt because it ships as its own extension and its members collide the same way.
+The rule is identical in the companion test app (`<AppName>_Test`). Test codeunits, and every procedure inside them, carry the same prefix: `[Test]` procedures, `[HandlerFunctions]` handlers, `[MessageHandler]`/`[ConfirmHandler]`/`[ModalPageHandler]` procedures, `[Scope('OnPrem')]` helpers, and local setup or assertion helpers. The test app is not exempt because it ships as its own extension and its members collide the same way. What carries the prefix is the procedure *name*; the attribute above it never does — `[ConfirmHandler]`, `[Test]` and `[HandlerFunctions]` are fixed platform tokens outside the scope of `mandatoryPrefix`, and prefixing one is a compile error. See `cmfrt-handler-attributes-never-prefixed`.
 
 ## Best Practice
 
