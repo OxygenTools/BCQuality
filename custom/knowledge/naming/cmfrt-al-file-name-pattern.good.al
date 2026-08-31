@@ -24,15 +24,15 @@ table 2045085 "CMFRT AM Address"
     }
 }
 
-// File name: CMFRTAMShipToAddress.TableExt.al
+// File name: CMFRTAMContact.TableExt.al
 // An extension object is named after itself, not after the object it extends:
-// the file carries "CMFRT AM Ship-to Address" minus its spaces, not
-// "ShipToAddress". The house does the same for pages — CMFRTGUJobCard.PageExt.al.
-tableextension 2045090 "CMFRT AM Ship-to Address" extends "Ship-to Address"
+// the file carries "CMFRT AM Contact" minus its spaces, not "Contact". The
+// house does the same for pages — CMFRTGUJobCard.PageExt.al extends "Job Card".
+tableextension 2045091 "CMFRT AM Contact" extends Contact
 {
     fields
     {
-        field(2045090; "CMFRT AM Address No."; Code[20])
+        field(2045091; "CMFRT AM Address No."; Code[20])
         {
             Caption = 'Address No.';
             DataClassification = CustomerContent;
