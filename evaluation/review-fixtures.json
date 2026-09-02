@@ -28,6 +28,9 @@
     "telemetry": {
       "article": "telemetry-event-id-stable-unique"
     },
+    "testing": {
+      "article": "ui-handlers-in-tests"
+    },
     "upgrade": {
       "article": "initvalue-does-not-update-existing-rows",
       "context": "The extended table existed in the previous app version and already contains rows."

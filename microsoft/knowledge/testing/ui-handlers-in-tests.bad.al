@@ -40,6 +40,17 @@ codeunit 50401 "Test UI Handler Proof Bad"
         Page.RunModal(Page::"Customer Card", Customer);
     end;
 
+    [Test]
+    [HandlerFunctions('CustomerCardHandler,MandatoryNotificationHandler')]
+    procedure UnreachedNonoptionalNotificationHandlerFailsAtRuntime()
+    var
+        Customer: Record Customer;
+    begin
+        LibrarySales.CreateCustomer(Customer);
+
+        Page.RunModal(Page::"Customer Card", Customer);
+    end;
+
     [ModalPageHandler]
     procedure CustomerCardHandler(var CustomerCard: TestPage "Customer Card")
     begin
@@ -49,6 +60,12 @@ codeunit 50401 "Test UI Handler Proof Bad"
     procedure UnusedConfirmHandler(Question: Text[1024]; var Reply: Boolean)
     begin
         Reply := true;
+    end;
+
+    [SendNotificationHandler]
+    procedure MandatoryNotificationHandler(var TheNotification: Notification): Boolean
+    begin
+        exit(true);
     end;
 
     var
