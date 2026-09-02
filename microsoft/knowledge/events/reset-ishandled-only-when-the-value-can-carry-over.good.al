@@ -1,19 +1,20 @@
 // Demonstration-only AL. Not compiled by CI; illustrates the article.
-codeunit 50241 "IsHandled Init Bad Sample"
+codeunit 50240 "IsHandled Carry Over Good Sample"
 {
     procedure ApplyDiscounts(var SalesHeader: Record "Sales Header")
     var
         DiscountPct: Decimal;
-        IsHandled: Boolean;
+        HeaderIsHandled: Boolean;
+        PaymentIsHandled: Boolean;
     begin
-        OnBeforeApplyHeaderDiscount(SalesHeader, DiscountPct, IsHandled);
-        if not IsHandled then
+        // Each fresh local is false and belongs to one non-looping raise.
+        OnBeforeApplyHeaderDiscount(SalesHeader, DiscountPct, HeaderIsHandled);
+        if not HeaderIsHandled then
             DiscountPct := 5;
 
-        // Bug: execution continues when the first event set IsHandled to true,
-        // and that stale value is passed to a different publisher.
-        OnBeforeApplyPaymentDiscount(SalesHeader, DiscountPct, IsHandled);
-        if not IsHandled then
+        // Handling the header event does not suppress this independent seam.
+        OnBeforeApplyPaymentDiscount(SalesHeader, DiscountPct, PaymentIsHandled);
+        if not PaymentIsHandled then
             DiscountPct += 2;
     end;
 
@@ -23,8 +24,9 @@ codeunit 50241 "IsHandled Init Bad Sample"
     begin
         if SalesLine.FindSet() then
             repeat
-                // Bug: the local initializes only once. A subscriber that handles
-                // one line leaves true for every later iteration.
+                // The local initializes once, so reset it per iteration; a
+                // subscriber that handles one line must not skip the rest.
+                LineIsHandled := false;
                 OnBeforeApplyLineDiscount(SalesLine, LineIsHandled);
                 if not LineIsHandled then
                     SalesLine.Validate("Line Discount %", 5);

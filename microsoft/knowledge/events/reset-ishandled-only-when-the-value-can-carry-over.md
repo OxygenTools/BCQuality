@@ -1,7 +1,7 @@
 ---
 bc-version: [all]
 domain: events
-keywords: [ishandled, initialization, deterministic, onbefore, reset, integration-event, control-flow]
+keywords: [ishandled, carry-over, loop-iteration, onbefore, reset, integration-event, control-flow, false-positive]
 technologies: [al]
 countries: [w1]
 application-area: [all]
@@ -17,10 +17,10 @@ A routine that raises an `OnBefore…` integration event with a `var IsHandled: 
 
 Reset `IsHandled := false;` before a raise only when the value might otherwise carry over as `true`: the same variable is reused after an earlier raise without a control-flow proof that it is false, a raise is re-entered by a loop, the value comes from an input parameter, field, or global, or earlier code seeds it. Prefer separate fresh locals when independent event seams need independent handled state. A reset on a guaranteed-false fresh local used by one non-looping raise, or before a later raise reached only after a semantically valid `if IsHandled then exit;`, can be retained for readability, but its absence is not a correctness finding.
 
-See sample: `initialize-ishandled-to-false-before-publishing.good.al`.
+See sample: `reset-ishandled-only-when-the-value-can-carry-over.good.al`.
 
 ## Anti Pattern
 
 Raising `OnBeforeX(…, IsHandled)` when the variable can still be `true` from an earlier raise, an earlier loop iteration, or another source, so the publisher call starts with stale state. Do not match a single non-looping raise using a fresh local Boolean, or a later raise reached only after a semantically valid `if IsHandled then exit;` proves the value is false.
 
-See sample: `initialize-ishandled-to-false-before-publishing.bad.al`.
+See sample: `reset-ishandled-only-when-the-value-can-carry-over.bad.al`.

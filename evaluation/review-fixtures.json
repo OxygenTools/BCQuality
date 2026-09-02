@@ -11,7 +11,7 @@
       "article": "do-not-expose-sensitive-data-through-public-api"
     },
     "events": {
-      "article": "initialize-ishandled-to-false-before-publishing"
+      "article": "reset-ishandled-only-when-the-value-can-carry-over"
     },
     "interfaces": {
       "article": "set-defaultimplementation-on-enum"
