@@ -23,6 +23,8 @@ Place the `Commit()` immediately before the `Run` and **say in a comment why it 
 
 Where the surrounding work is a loop over buffer rows, `cmfrt-buffer-status-loop-shape` owns the loop's shape.
 
+A worker that only reads — a `Get`/`Error` validator holding read permissions only — gains no rollback boundary from `Codeunit.Run`, because it has nothing to unwind. The choice of primitive for such a worker is therefore not governed by this article, and a try method is an acceptable trap there. What does not change is the platform rule, which keys on the *caller's* open write transaction rather than on what the callee writes: a caller that has already written and still calls `Codeunit.Run` needs the `Commit()` regardless of the worker being read-only. Dropping the `Codeunit.Run` is what removes the commit, and that is a judgement about the worker, not about the commit.
+
 See sample: `cmfrt-codeunit-run-not-tryfunction.good.al`.
 
 ## Anti Pattern
