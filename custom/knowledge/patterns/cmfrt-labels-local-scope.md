@@ -24,3 +24,7 @@ See sample: `cmfrt-labels-local-scope.good.al`.
 Labels declared in the codeunit-level `var` section, or placeholder labels without a `Comment` attribute. Global labels outlive their callers as dead text, are shared between unrelated procedures, and their missing placeholder documentation produces mistranslations that only surface in localized builds.
 
 See sample: `cmfrt-labels-local-scope.bad.al`.
+
+## Related
+
+`patterns/cmfrt-no-object-level-vars` states the same local-scope rule for every other variable type and lists the structural exceptions where object scope is required. This article stays the more specific case: it additionally requires the `Comment` placeholder attribute. Cite this article for a global `Label`, the general one for anything else.

@@ -5,10 +5,12 @@ codeunit 80001 "CMFRT AM Designation Tests"
     Subtype = Test;
     TestPermissions = Disabled;
 
+    // Only the handler channel is object-level: handler attributes have platform-fixed
+    // signatures, and Library - Variable Storage is not SingleInstance, so the test method
+    // and its handler can reach the same queue no other way. Assert and TestLibrary are
+    // declared per procedure — see patterns/cmfrt-no-object-level-vars.
     var
-        Assert: Codeunit Assert;
         LibraryVariableStorage: Codeunit "Library - Variable Storage";
-        TestLibrary: Codeunit "CMFRT AM Test Library";
 
     [Test]
     [HandlerFunctions('CMFRTAMConfirmGapWarning')]
@@ -16,6 +18,8 @@ codeunit 80001 "CMFRT AM Designation Tests"
     var
         CMFRTAMAddress: Record "CMFRT AM Address";
         MiddleDesignation: Record "CMFRT AM Designation";
+        Assert: Codeunit Assert;
+        TestLibrary: Codeunit "CMFRT AM Test Library";
     begin
         // GIVEN an address with a designation in the middle of its coverage history
         TestLibrary.CMFRTAMCreateAddress(CMFRTAMAddress);
@@ -36,6 +40,7 @@ codeunit 80001 "CMFRT AM Designation Tests"
     [ConfirmHandler]
     procedure CMFRTAMConfirmGapWarning(Question: Text; var Reply: Boolean)
     var
+        Assert: Codeunit Assert;
         ExpectedFragment: Text;
     begin
         ExpectedFragment := LibraryVariableStorage.DequeueText();
@@ -45,6 +50,8 @@ codeunit 80001 "CMFRT AM Designation Tests"
 
     [MessageHandler]
     procedure CMFRTAMHandleInfoMessage(Message: Text[1024])
+    var
+        Assert: Codeunit Assert;
     begin
         Assert.ExpectedMessage(LibraryVariableStorage.DequeueText(), Message);
     end;
