@@ -47,3 +47,8 @@ Moving a translatable label from object to procedure scope changes its trans-uni
 Stateless helper codeunit instances, labels and working variables hoisted to the object's `var` section so several procedures can reach them, in an object that is not `SingleInstance`, not a DTO, not a `Run` boundary, not a page/report/xmlport binding, and not a manual subscriber instance.
 
 See sample: `cmfrt-no-object-level-vars.bad.al`.
+
+## Related
+
+- `patterns/cmfrt-labels-local-scope` — the same rule for `Label`, plus the `Comment` requirement.
+- `security/cmfrt-license-feature-gate` — owns the scope rule for a page's `// License section` block, including the grandfathered object-scope form; cite that article there, not this one.
