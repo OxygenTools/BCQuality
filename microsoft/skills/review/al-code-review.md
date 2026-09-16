@@ -25,6 +25,7 @@ sub-skills:
   - microsoft/skills/review/al-testing-review.md
   - microsoft/skills/review/al-data-modeling-review.md
   - microsoft/skills/review/al-query-review.md
+  - microsoft/skills/review/al-reporting-review.md
   - microsoft/skills/review/al-appsource-review.md
   - microsoft/skills/review/al-telemetry-review.md
 ---
@@ -40,6 +41,11 @@ An orchestrator invokes this skill with a `pr-diff`, `file-path`, or `folder-pat
 ## Source
 
 The sub-skills invoked by this skill are those listed in frontmatter `sub-skills`. Additional leaf skills are added by updating the `sub-skills` list. The skill does not discover sub-skills implicitly.
+
+Hosts that orchestrate leaves mechanically SHOULD run
+`tools/Build-SkillIndex.ps1` and resolve this skill by `id: al-code-review`.
+The generated `subSkills` array preserves the frontmatter order and avoids
+host-specific Markdown parsing.
 
 ## Relevance
 
