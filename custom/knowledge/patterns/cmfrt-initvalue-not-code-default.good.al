@@ -44,23 +44,64 @@ table 55008 "CMFRT AQ Setup"
 
 // Part 2 — the ineligible-type path, for when retyping is not available (the field already
 // shipped, or the type is genuinely required). Duration, Blob, Media, MediaSet, Guid,
-// RecordId and TableFilter are all absent from the AL0844 list. The default goes on the
-// creation path, right after Init() and before the insert, so an OnBeforeInsert subscriber
-// can still override it — never into a read-time getter.
+// RecordId and TableFilter are all absent from the AL0844 list, so the default goes on the
+// creation path instead. Two things matter here beyond "after Init()":
+//   * The slot is between Init() and OnBefore...Insert. The event receives the record by
+//     reference with the default already applied, so a subscriber can change it or set
+//     IsHandled and suppress the insert. Assigning after the event overwrites that choice.
+//   * In the OnBefore -> Do -> OnAfter triple, the assignment lives in the Do local, never
+//     in the public wrapper. See events/cmfrt-onbefore-do-onafter.
+// Caveat worth knowing: if this procedure is only reached from a setup page's OnOpenPage,
+// the default first applies when someone opens that page. An install codeunit is the
+// stronger home where the app has one.
 codeunit 55030 "CMFRT AQ Setup Init"
 {
-    procedure CMFRTAQEnsureSetup(): Boolean
-    var
-        CMFRTAQSetup: Record "CMFRT AQ Setup";
+    procedure CMFRTAQEnsureSetupExists(var IsHandled: Boolean)
     begin
-        if CMFRTAQSetup.Get() then
-            exit(false);
+        OnBeforeCMFRTAQEnsureSetupExists(IsHandled);
+        DoCMFRTAQEnsureSetupExists(IsHandled);
+        OnAfterCMFRTAQEnsureSetupExists(IsHandled);
+    end;
 
-        CMFRTAQSetup.Init();
-        // The one declaration of the default for a type InitValue cannot reach.
-        CMFRTAQSetup."CMFRT AQ FS Grace Period" := 5 * 60 * 1000; // 5 minutes
-        CMFRTAQSetup.Insert(true);
-        exit(true);
+    local procedure DoCMFRTAQEnsureSetupExists(IsHandled: Boolean)
+    var
+        AQSetup: Record "CMFRT AQ Setup";
+    begin
+        if IsHandled then
+            exit;
+
+        if AQSetup.Get() then
+            exit;
+
+        AQSetup.Init();
+        // The one declaration of the default for a type InitValue cannot reach. It sits
+        // before the OnBefore event, so a subscriber still gets the last word.
+        AQSetup."CMFRT AQ FS Grace Period" := 5 * 60 * 1000; // 5 minutes
+
+        OnBeforeCMFRTAQEnsureSetupExistsInsert(AQSetup, IsHandled);
+        if not IsHandled then
+            AQSetup.Insert();
+        OnAfterCMFRTAQEnsureSetupExistsInsert(AQSetup);
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnBeforeCMFRTAQEnsureSetupExists(var IsHandled: Boolean)
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterCMFRTAQEnsureSetupExists(IsHandled: Boolean)
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnBeforeCMFRTAQEnsureSetupExistsInsert(var AQSetup: Record "CMFRT AQ Setup"; var IsHandled: Boolean)
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterCMFRTAQEnsureSetupExistsInsert(var AQSetup: Record "CMFRT AQ Setup")
+    begin
     end;
 }
 
