@@ -17,10 +17,10 @@ CMFRT object IDs are partitioned into two non-overlapping numeric ranges by depl
 
 Before adding any AL object, identify whether the feature is product-wide or customer-specific, look up the highest currently allocated ID in the correct range across the extension's source, and assign the next sequential ID. Record ID allocations in the pull request description so reviewers can confirm the range and sequence without scanning all object files.
 
-See sample: `cmfrt-object-id-ranges.good.al`.
+See sample: [`cmfrt-object-id-ranges.good.al`](cmfrt-object-id-ranges.good.al).
 
 ## Anti Pattern
 
 Assigning an ID outside both ranges, choosing a round-number ID that has no relation to the next free slot, reusing an ID from a previously removed object, or numbering table fields or enum values outside the licensed range (for example `field(10; ...)` on a customer-range table). ID conflicts between extensions produce runtime application errors that are difficult to reproduce and trace, because the conflict may only manifest when both extensions are installed in the same environment.
 
-See sample: `cmfrt-object-id-ranges.bad.al`.
+See sample: [`cmfrt-object-id-ranges.bad.al`](cmfrt-object-id-ranges.bad.al).

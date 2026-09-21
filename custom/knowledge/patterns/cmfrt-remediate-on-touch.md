@@ -32,7 +32,7 @@ Leave alone, and report as debt instead:
 
 Apply a budget. When the count of pre-existing violations is large enough that remediation would dominate the change, remediate none of them and report the rule, the count, and the object so the debt is visible and can be ticketed. Half a migration is worse than none: it leaves the same two-shapes ambiguity the rule exists to remove.
 
-See samples: `cmfrt-remediate-on-touch.good.al`, `cmfrt-remediate-on-touch.bad.al`.
+See samples: [`cmfrt-remediate-on-touch.good.al`](cmfrt-remediate-on-touch.good.al), [`cmfrt-remediate-on-touch.bad.al`](cmfrt-remediate-on-touch.bad.al).
 
 ## Anti Pattern
 

@@ -17,10 +17,10 @@ Every CMFRT functional module must ship exactly three permission set objects: an
 
 Define the sets in the strict composition chain Objects ← Read ← Edit so that object access is declared once and inherited. When a new table is added to the module, update the Objects set and the tabledata entries in Read and Edit — there is no risk of the object access drifting between roles because the chain is the single source of truth for it.
 
-See sample: `cmfrt-three-permissionset-pattern.good.al`.
+See sample: [`cmfrt-three-permissionset-pattern.good.al`](cmfrt-three-permissionset-pattern.good.al).
 
 ## Anti Pattern
 
 Shipping fewer than three permission sets, omitting `IncludedPermissionSets` and enumerating the same object list in each set by hand, or granting `RIMD` access in a flat set that cannot be composed. Flat role sets that enumerate objects independently drift apart when tables are added or removed, and the resulting authorization gap is invisible until a user reports an access error in production.
 
-See sample: `cmfrt-three-permissionset-pattern.bad.al`.
+See sample: [`cmfrt-three-permissionset-pattern.bad.al`](cmfrt-three-permissionset-pattern.bad.al).

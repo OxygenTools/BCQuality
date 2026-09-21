@@ -17,10 +17,10 @@ When CMFRT code truncates a text value to fit a field, the length argument of `C
 
 Write `Rec."CMFRT AQ User ID" := CopyStr(UserId(), 1, MaxStrLen(Rec."CMFRT AQ User ID"));`. The expression stays correct through any future field-length change and documents intent: truncate to whatever fits the target.
 
-See sample: `cmfrt-maxstrlen-copystr.good.al`.
+See sample: [`cmfrt-maxstrlen-copystr.good.al`](cmfrt-maxstrlen-copystr.good.al).
 
 ## Anti Pattern
 
 `CopyStr(UserId(), 1, 50)` — the literal encodes the field length at the time of writing. Widening the field leaves data truncated at the stale length; narrowing it turns the assignment into a runtime "length exceeds" error that only fires on long values in production.
 
-See sample: `cmfrt-maxstrlen-copystr.bad.al`.
+See sample: [`cmfrt-maxstrlen-copystr.bad.al`](cmfrt-maxstrlen-copystr.bad.al).

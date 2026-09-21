@@ -27,10 +27,10 @@ Spaces and the trailing `.` of an established abbreviation count toward the tota
 
 Procedure names are not bound by the 30-character platform limit and must stay self-describing per `cmfrt-naming-prefix.md` — never abbreviate a procedure name to save characters it does not need.
 
-See sample: `cmfrt-object-name-30-char-limit.good.al`.
+See sample: [`cmfrt-object-name-30-char-limit.good.al`](cmfrt-object-name-30-char-limit.good.al).
 
 ## Anti Pattern
 
 A prefixed name over 30 characters (`"CMFRT GD Point Of Interest Entry"` is 32). A descriptive name chosen at or near 30 characters while unprefixed, so that applying `CMFRT <ABBR> ` is impossible — this reads as a prefix violation but the root cause is the length budget. Abbreviating past comprehensibility to buy room for the prefix, which trades a publish-time failure for a permanently unreadable object name.
 
-See sample: `cmfrt-object-name-30-char-limit.bad.al`.
+See sample: [`cmfrt-object-name-30-char-limit.bad.al`](cmfrt-object-name-30-char-limit.bad.al).

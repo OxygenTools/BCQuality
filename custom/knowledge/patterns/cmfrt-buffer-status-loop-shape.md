@@ -25,13 +25,13 @@ The per-row `Commit()` is deliberate and supersedes `microsoft/knowledge/perform
 - **Branch flat.** Repeat the `Modify` in both branches rather than hoisting it out behind a boolean flag — the flag costs a variable and two tests to save one line.
 - **A side-effect write that accompanies a failure** — a User Task, a notification, a log row — goes inside the failure branch, after the `Modify` and before the `Commit()`. Such an insert re-opens the write transaction the `Commit()` exists to close for the next iteration's `Codeunit.Run`, so placing it after the commit breaks the following row rather than the current one.
 
-See sample: `cmfrt-buffer-status-loop-shape.good.al`.
+See sample: [`cmfrt-buffer-status-loop-shape.good.al`](cmfrt-buffer-status-loop-shape.good.al).
 
 ## Anti Pattern
 
 Reading the full set and skipping rows with an `if` inside the loop. `SetFilter(..., '<>%1', Status::Processed)` on an extensible status enum. Sorting on the grouping key that contains the status field the loop writes, which lets rows move out from under the cursor as they are updated. Capturing the `Run` result in a local boolean and testing it twice. `FindSet(true)` ahead of an in-loop `Codeunit.Run`. Placing the notifier or log write after the `Commit()`.
 
-See sample: `cmfrt-buffer-status-loop-shape.bad.al`.
+See sample: [`cmfrt-buffer-status-loop-shape.bad.al`](cmfrt-buffer-status-loop-shape.bad.al).
 
 ## See also
 

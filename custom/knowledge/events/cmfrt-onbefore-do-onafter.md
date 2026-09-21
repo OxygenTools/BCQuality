@@ -17,10 +17,10 @@ Global procedures in CMFRT Meth codeunits are thin shells: the body consists of 
 
 Write every global Meth procedure as: reset `IsHandled`, fire `OnBefore`, call `Do<Name>(..., IsHandled)`, fire `OnAfter`. In `Do<Name>`, place `if IsHandled then exit;` as the first executable statement, then execute business logic. When review finds a global procedure whose body mixes event calls with business logic, extract the logic into `Do<Name>` and move its private variables and labels along with it.
 
-See sample: `cmfrt-onbefore-do-onafter.good.al`.
+See sample: [`cmfrt-onbefore-do-onafter.good.al`](cmfrt-onbefore-do-onafter.good.al).
 
 ## Anti Pattern
 
 A global procedure that keeps `if IsHandled then exit;` and business logic inline between the `OnBefore` and `OnAfter` calls. Inline bodies grow early `exit` paths that silently skip the `OnAfter` event, and their local variables and labels accumulate at the shell level where every branch can touch them. Equally wrong: declaring the event pair but never calling the events from the procedure (dead events), which advertises an extension point that never fires.
 
-See sample: `cmfrt-onbefore-do-onafter.bad.al`.
+See sample: [`cmfrt-onbefore-do-onafter.bad.al`](cmfrt-onbefore-do-onafter.bad.al).

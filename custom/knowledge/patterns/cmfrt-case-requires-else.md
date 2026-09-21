@@ -17,10 +17,10 @@ Every `case` statement in CMFRT AL code must include an `else` clause. The rule 
 
 Always add an `else` clause to every `case` statement. When no meaningful action applies to unexpected values, the `else` clause should raise an error that identifies the unexpected value, log it, or call a dedicated handler procedure. The key outcome is that the unexpected case is detected at runtime rather than silently ignored.
 
-See sample: `cmfrt-case-requires-else.good.al`.
+See sample: [`cmfrt-case-requires-else.good.al`](cmfrt-case-requires-else.good.al).
 
 ## Anti Pattern
 
 Writing a `case` statement that enumerates all currently known values and omits `else`. The code appears complete but becomes a silent failure mode the moment a new enum value is added by a future developer or by a base application update, because the added value simply falls through the entire `case` block.
 
-See sample: `cmfrt-case-requires-else.bad.al`.
+See sample: [`cmfrt-case-requires-else.bad.al`](cmfrt-case-requires-else.bad.al).

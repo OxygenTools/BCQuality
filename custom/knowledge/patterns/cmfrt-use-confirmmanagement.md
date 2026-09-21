@@ -17,10 +17,10 @@ CMFRT AL code must use the `"Confirm Management"` codeunit to prompt the user fo
 
 Declare `ConfirmManagement: Codeunit "Confirm Management";` as a local variable and call `ConfirmManagement.GetResponseOrDefault(QuestionLbl, true)`. The codeunit suppresses the dialog automatically in test context. Use a `Label` for the question text so it is translatable.
 
-See sample: `cmfrt-use-confirmmanagement.good.al`.
+See sample: [`cmfrt-use-confirmmanagement.good.al`](cmfrt-use-confirmmanagement.good.al).
 
 ## Anti Pattern
 
 Calling `if Confirm(QuestionText, true) then` directly. Direct `Confirm` calls are not interceptable by the test framework: the modal dialog appears during automated test runs, causing the test to stall indefinitely or fail with a UI-interaction error. Tests that hit a `Confirm` call cannot be run in a CI pipeline without manual intervention.
 
-See sample: `cmfrt-use-confirmmanagement.bad.al`.
+See sample: [`cmfrt-use-confirmmanagement.bad.al`](cmfrt-use-confirmmanagement.bad.al).

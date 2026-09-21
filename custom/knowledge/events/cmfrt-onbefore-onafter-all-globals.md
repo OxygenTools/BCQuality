@@ -17,7 +17,7 @@ Every global procedure in a CMFRT extension must be bracketed by a paired `OnBef
 
 Declare both events at the time the global procedure is written, not as a later addition. Place the `OnBefore` call at the top of the procedure body before any logic, and the `OnAfter` call at the bottom after the last statement. Follow the naming convention `OnBefore<ProcedureName>` and `OnAfter<ProcedureName>` exactly so event consumers can locate publishers by convention.
 
-See sample: `cmfrt-onbefore-onafter-all-globals.good.al`.
+See sample: [`cmfrt-onbefore-onafter-all-globals.good.al`](cmfrt-onbefore-onafter-all-globals.good.al).
 
 ## Anti Pattern
 
@@ -25,4 +25,4 @@ Publishing a global procedure without both `OnBefore` and `OnAfter` integration 
 
 The inverse is equally a violation: event declarations that nothing raises. An `[IntegrationEvent]` declared but never called from any procedure, or a wrapper procedure (for example a `[TryFunction]` insert wrapper) that no caller invokes, is dead code that advertises an extension point which never fires. Wire the event into the owning procedure or delete the declaration and its plumbing.
 
-See sample: `cmfrt-onbefore-onafter-all-globals.bad.al`.
+See sample: [`cmfrt-onbefore-onafter-all-globals.bad.al`](cmfrt-onbefore-onafter-all-globals.bad.al).

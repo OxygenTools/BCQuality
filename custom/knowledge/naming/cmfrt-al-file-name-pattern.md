@@ -23,10 +23,10 @@ This rule supersedes `microsoft/knowledge/style/file-name-object-type-pattern.md
 
 Name the file `<DeclaredObjectNameWithoutSpaces>.<ObjectType>.al`. The object portion is PascalCase because the declared name is (`CMFRT <ABBR> <Name>` with the prefix's spaces removed); it contains no spaces, no underscores, no object ID and no dots. Use the AL object-type names for the segment — `Table`, `TableExt`, `Page`, `PageExt`, `Codeunit`, `Enum`, `EnumExt`, `Interface`, `PermissionSet`, `Report`, `ReportExt`, `Query`, `XmlPort`. Renaming an object is therefore always a two-part change: the declaration and the file name move together.
 
-See sample: `cmfrt-al-file-name-pattern.good.al`.
+See sample: [`cmfrt-al-file-name-pattern.good.al`](cmfrt-al-file-name-pattern.good.al).
 
 ## Anti Pattern
 
 `Table2045085.CMFRT AM Address.al`, `Codeunit2045109.CMFRT AM Install.al`, `PageExtension2045118.CMFRT AM Ship-to Address.al` — the object type is written as a prefix carrying the object ID, the real name follows after a dot, and the spaces are kept. All 51 AL files on the rejected `claude/pbr13-54` branch were named this way, which is why the fix was a repo-wide rename rather than a review comment. Also wrong: omitting the type segment (`AddressLogic.al`), snake_case or lowercase object portions (`cmfrt_am_address.table.al`), and more than one object in a file.
 
-See sample: `cmfrt-al-file-name-pattern.bad.al`.
+See sample: [`cmfrt-al-file-name-pattern.bad.al`](cmfrt-al-file-name-pattern.bad.al).
