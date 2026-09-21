@@ -43,7 +43,7 @@ See sample: [`cmfrt-initvalue-not-code-default.bad.al`](cmfrt-initvalue-not-code
 
 ## See also
 
-`microsoft/knowledge/upgrade/initvalue-does-not-update-existing-rows.md` supplies the back-fill mechanics and the `DataTransfer` shape, and is cited rather than restated here. This article **narrows** one of its exemptions: that article lists new fields on configuration or setup tables as a case needing no upgrade code, on the reasoning that such tables have no meaningful existing data. For a CMFRT setup singleton that is not true — the row exists in every live environment — so a new configurable field on a setup table is in scope here and the decision must still be made and recorded. Layer precedence applies.
+`microsoft/knowledge/upgrade/initvalue-does-not-update-existing-rows.md` supplies the back-fill mechanics and the `DataTransfer` shape, and is cited rather than restated here. This article **narrows** one of its exemptions: that article lists new fields on configuration or setup tables as a case needing no upgrade code, on the reasoning that such tables have no meaningful existing data. For a CMFRT setup singleton that is not true — the row exists in every live environment — so a new configurable field on a setup table is in scope here and the decision must still be made and recorded. That exemption sits in the microsoft article's `## Description`, which is non-normative, so this is a narrowing rather than a precedence conflict: nothing in its `## Best Practice` or `## Anti Pattern` is contradicted, and a consumer should cite both articles rather than suppress either.
 
 `custom/knowledge/naming/cmfrt-caption-prefix.md` applies the same "declare it once on the table field" principle to `Caption` and `ToolTip`.
 
