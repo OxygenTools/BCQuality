@@ -1,7 +1,11 @@
-// Part 1 — the eligible-type path, and the resolution this ticket took. The setting started
-// as a Duration in milliseconds, which cannot carry InitValue (AL0844). The field was new
-// and unshipped, so retyping it to an Integer holding minutes was free: Integer is on the
-// AL0844 list, InitValue = 15 is legal, and "15" reads better on the setup page than 900000.
+// Part 1 — the eligible-type path, and the resolution this ticket shipped. The setting
+// started as a Duration in milliseconds, which cannot carry InitValue (AL0844). The field
+// was new and unshipped, so retyping it to an Integer holding minutes was free: Integer is
+// on the AL0844 list, InitValue = 15 is legal, and 15 reads better than 900000 on the page.
+//
+// Note the field name. "CMFRT AQ FS Stuck Threshold Min." is 32 characters and does not
+// compile — the unit suffix competes with the CMFRT <ABBR> prefix for the 30-character
+// budget. It shrinks to exactly 30; the Caption carries the readable unit instead.
 table 55008 "CMFRT AQ Setup"
 {
     Caption = 'CMFRT AQ Setup';
@@ -14,15 +18,15 @@ table 55008 "CMFRT AQ Setup"
             Caption = 'Primary Key';
             DataClassification = CustomerContent;
         }
-        field(55015; "CMFRT AQ FS Stuck Threshold"; Integer)
+        field(55015; "CMFRT AQ FS Stuck Thresh. Min."; Integer)
         {
-            Caption = 'CMFRT AQ FS Stuck Threshold (Min.)';
+            Caption = 'CMFRT AQ FS Stuck Threshold (Minutes)';
             DataClassification = CustomerContent;
-            // Minutes. InitValue takes a literal, not an expression — 15 * 60 would not
-            // compile even here, and on the original Duration no literal was legal at all.
-            InitValue = 15;
+            // InitValue takes a literal, not an expression: 15 * 60 would not compile here
+            // either, and on the original Duration no literal was legal at all.
+            InitValue = 15; // minutes
             MinValue = 0;
-            ToolTip = 'Specifies how many minutes a file service buffer entry may stay in Processing before Process Pending treats it as stuck and returns it to Pending.';
+            ToolTip = 'Specifies, in minutes, how long a Field Service buffer entry may stay Processing before the Process Pending action treats it as stuck and hands it back to Pending. New installations start at 15 minutes; the value can be changed on this page.';
         }
     }
 
@@ -31,14 +35,24 @@ table 55008 "CMFRT AQ Setup"
         key(PK; "Primary Key") { Clustered = true; }
     }
 
-    // No fallback branch. Converting the stored unit is not a default — the number comes
-    // from the field, and if it is zero the setup is unconfigured, which stays visible.
+    // No fallback branch. Converting a stored unit is not a default — the number comes from
+    // the field, and if it is zero the setup is unconfigured, which stays visible.
+    //
+    // The arithmetic is Integer * Integer, then assigned to a Duration (a 64-bit millisecond
+    // count). The alternative — a Duration-typed MillisecondsPerMinute and Duration * Integer
+    // — was rejected: AL's binary arithmetic operator table does not list Duration for any
+    // operator, and there is no prior art for it across the sibling CMFRT apps. That is
+    // undocumented rather than proven illegal, but after AL0844 undocumented is enough to
+    // avoid in shipped code. The cost is an Integer ceiling of ~35,791 minutes (~24.8 days),
+    // far beyond any sane stuck threshold.
     procedure CMFRTAQGetStuckThreshold(): Duration
+    var
+        StuckThreshold: Duration;
     begin
-        Rec.SetLoadFields("CMFRT AQ FS Stuck Threshold");
-        if not Rec.Get() then
-            exit(0);
-        exit(Rec."CMFRT AQ FS Stuck Threshold" * 60 * 1000);
+        Rec.SetLoadFields("CMFRT AQ FS Stuck Thresh. Min.");
+        if Rec.Get() then
+            StuckThreshold := Rec."CMFRT AQ FS Stuck Thresh. Min." * 60000;
+        exit(StuckThreshold);
     end;
 }
 
@@ -129,14 +143,14 @@ codeunit 55031 "CMFRT AQ Upgrade Stuck Thr."
         CMFRTAQSetup: Record "CMFRT AQ Setup";
         StuckThresholdDataTransfer: DataTransfer;
     begin
-        CMFRTAQSetup.SetRange("CMFRT AQ FS Stuck Threshold", 0);
+        CMFRTAQSetup.SetRange("CMFRT AQ FS Stuck Thresh. Min.", 0);
         if CMFRTAQSetup.IsEmpty() then
             exit;
 
         StuckThresholdDataTransfer.SetTables(Database::"CMFRT AQ Setup", Database::"CMFRT AQ Setup");
-        StuckThresholdDataTransfer.AddSourceFilter(CMFRTAQSetup.FieldNo("CMFRT AQ FS Stuck Threshold"), '=%1', 0);
+        StuckThresholdDataTransfer.AddSourceFilter(CMFRTAQSetup.FieldNo("CMFRT AQ FS Stuck Thresh. Min."), '=%1', 0);
         // Same literal as the field's InitValue.
-        StuckThresholdDataTransfer.AddConstantValue(15, CMFRTAQSetup.FieldNo("CMFRT AQ FS Stuck Threshold"));
+        StuckThresholdDataTransfer.AddConstantValue(15, CMFRTAQSetup.FieldNo("CMFRT AQ FS Stuck Thresh. Min."));
         StuckThresholdDataTransfer.CopyFields();
     end;
 
