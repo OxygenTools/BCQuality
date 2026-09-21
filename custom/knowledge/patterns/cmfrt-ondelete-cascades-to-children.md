@@ -35,10 +35,10 @@ An `if not Child.IsEmpty() then` guard before `DeleteAll` is unnecessary: `Delet
 
 **This article deliberately overrides `microsoft/knowledge/performance/use-deleteall-for-filtered-bulk-deletion.md`** for parent-child cleanup. That article is about purpose-built staging tables with no delete logic, where `DeleteAll(false)` is eligible for a set-based SQL delete. In a cascade the child's `OnDelete` *is* the logic being relied on, so correctness wins: use `true`. Per `custom > microsoft` precedence, a review must not cite the performance article to justify `false` here. Note also that `DeleteAll(true)` has no performance advantage over `Delete(true)` in a loop — the reason to prefer it is that it is one clear statement, not speed.
 
-See sample: `cmfrt-ondelete-cascades-to-children.good.al`.
+See sample: [`cmfrt-ondelete-cascades-to-children.good.al`](cmfrt-ondelete-cascades-to-children.good.al).
 
 ## Anti Pattern
 
 A header table with no `OnDelete` trigger at all, leaving lines in the database after the header is gone. `DeleteAll(false)` on the lines, which deletes them but orphans their comments and tracking. Relying on `TableRelation` to clean up, which it never does. Calling `Delete()` or `Delete(false)` on a parent from AL, bypassing the trigger that does the cascade. Cascading to the lines table only while other dependent tables keyed on the same header are left behind. An unfiltered `DeleteAll` inside `OnDelete`. A child `OnDelete` that deletes its own parent.
 
-See sample: `cmfrt-ondelete-cascades-to-children.bad.al`.
+See sample: [`cmfrt-ondelete-cascades-to-children.bad.al`](cmfrt-ondelete-cascades-to-children.bad.al).

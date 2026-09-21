@@ -17,10 +17,10 @@ In the CMFRT extension architecture, each implementation codeunit exposes exactl
 
 Create one implementation codeunit per functional concern. If a codeunit accumulates a second global procedure that has a distinct concern, extract that procedure into its own codeunit with its own interface. Keep local procedures `local` so callers outside the codeunit cannot bypass the interface contract.
 
-See sample: `cmfrt-one-codeunit-one-function.good.al`.
+See sample: [`cmfrt-one-codeunit-one-function.good.al`](cmfrt-one-codeunit-one-function.good.al).
 
 ## Anti Pattern
 
 Placing multiple global procedures in a single implementation codeunit. A multi-entry-point codeunit mixes concerns, prevents the interface injection pattern from being applied independently to each concern, and grows into a difficult-to-test utility class. Callers that skip the base-table entry point and call implementation procedures directly bypass integration events and violate the architecture.
 
-See sample: `cmfrt-one-codeunit-one-function.bad.al`.
+See sample: [`cmfrt-one-codeunit-one-function.bad.al`](cmfrt-one-codeunit-one-function.bad.al).

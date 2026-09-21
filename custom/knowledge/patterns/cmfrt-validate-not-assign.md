@@ -17,10 +17,10 @@ When CMFRT code populates fields on a real (non-buffer) table — Job, Sales Hea
 
 In creator and method codeunits that transfer buffer values into real tables, call `Validate` for every business field: `Job.Validate(Description, Buffer."CMFRT AQ Description");`. Keep primary-key fields (`Job."No." := ...`, `SalesLine."Document No." := ...`) as direct assignments, set immediately after `Init()`. Fill buffer tables by direct assignment.
 
-See sample: `cmfrt-validate-not-assign.good.al`.
+See sample: [`cmfrt-validate-not-assign.good.al`](cmfrt-validate-not-assign.good.al).
 
 ## Anti Pattern
 
 Filling a real table field-by-field with `:=`. The record is inserted with unvalidated data: posting-group checks never run, dependent fields (ship-to copies, cost fields, status transitions) stay empty or stale, and downstream extensions subscribed to `OnValidate` never fire. The defect surfaces later as inconsistent data that is hard to trace back to the skipped trigger.
 
-See sample: `cmfrt-validate-not-assign.bad.al`.
+See sample: [`cmfrt-validate-not-assign.bad.al`](cmfrt-validate-not-assign.bad.al).

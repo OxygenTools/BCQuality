@@ -23,7 +23,7 @@ Resolve a missing-codeunit error by identifying the app that *defines* the objec
 
 After editing the manifest, re-download symbols. Adding the dependency does not place the missing `.app` in `.alpackages`; until the package is fetched the same error persists and looks like the fix did not work.
 
-See sample: `cmfrt-test-app-declare-library-dependencies.good.json`.
+See sample: [`cmfrt-test-app-declare-library-dependencies.good.json`](cmfrt-test-app-declare-library-dependencies.good.json).
 
 ## Anti Pattern
 
@@ -31,4 +31,4 @@ A test manifest that declares only `Tests-TestLibraries`, `System Application Te
 
 Equally wrong is closing that error by guessing: adding a dependency on the app whose name most resembles the codeunit, or on whichever app a byte-grep of `.alpackages` matched. A grep hits *references* as well as definitions, so it routinely points at a consuming app rather than the defining one, and the added entry is then both wrong and harmless-looking, since the build still resolves the object transitively.
 
-See sample: `cmfrt-test-app-declare-library-dependencies.bad.json`.
+See sample: [`cmfrt-test-app-declare-library-dependencies.bad.json`](cmfrt-test-app-declare-library-dependencies.bad.json).

@@ -17,13 +17,13 @@ application-area: [all]
 
 Declare each label local to the procedure (usually the `Do<Name>` procedure) that passes it to `Error`, `Message`, `Confirm Management`, or `StrSubstNo`. Add `Comment` naming every placeholder. When review moves logic into a `Do` procedure, move its labels with it.
 
-See sample: `cmfrt-labels-local-scope.good.al`.
+See sample: [`cmfrt-labels-local-scope.good.al`](cmfrt-labels-local-scope.good.al).
 
 ## Anti Pattern
 
 Labels declared in the codeunit-level `var` section, or placeholder labels without a `Comment` attribute. Global labels outlive their callers as dead text, are shared between unrelated procedures, and their missing placeholder documentation produces mistranslations that only surface in localized builds.
 
-See sample: `cmfrt-labels-local-scope.bad.al`.
+See sample: [`cmfrt-labels-local-scope.bad.al`](cmfrt-labels-local-scope.bad.al).
 
 ## Related
 
