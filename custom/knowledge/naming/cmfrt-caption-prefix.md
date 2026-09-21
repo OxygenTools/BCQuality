@@ -17,10 +17,10 @@ Captions in a CMFRT extension follow the same prefix rule as names: every field 
 
 Set `Caption` with the full `CMFRT <ABBR>` prefix and `ToolTip` on the table field definition. On pages, declare only `ApplicationArea` for the field — no `Caption`, no `ToolTip`. Give every enum value a prefixed caption matching its prefixed value name.
 
-See sample: `cmfrt-caption-prefix.good.al`.
+See sample: [`cmfrt-caption-prefix.good.al`](cmfrt-caption-prefix.good.al).
 
 ## Anti Pattern
 
 An unprefixed caption (`Caption = 'Pending'`, `Caption = 'FS Journal Template Name'`), or a page field that repeats or overrides the table-level `Caption`/`ToolTip`. Unprefixed captions are indistinguishable from base-application text for users and translators, and duplicated page-level text drifts from the table definition the first time either copy is edited.
 
-See sample: `cmfrt-caption-prefix.bad.al`.
+See sample: [`cmfrt-caption-prefix.bad.al`](cmfrt-caption-prefix.bad.al).

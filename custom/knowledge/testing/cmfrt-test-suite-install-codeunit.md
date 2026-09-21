@@ -19,7 +19,7 @@ Add one install codeunit per test app, named `CMFRT <ABBR> Test Install`, holdin
 
 Pass the test app's full object ID range as declared in its `app.json` `idRanges`, not a hand-maintained span of the IDs that happen to exist today. A subset range is correct only until the next test codeunit is added, and nothing fails when it goes stale — the new tests are simply never selected. Keep the suite code a locked `Label` and truncate it with `CopyStr(..., 1, MaxStrLen(ALTestSuite.Name))`, since `Name` is `Code[10]`.
 
-See sample: `cmfrt-test-suite-install-codeunit.good.al`.
+See sample: [`cmfrt-test-suite-install-codeunit.good.al`](cmfrt-test-suite-install-codeunit.good.al).
 
 ## Anti Pattern
 
@@ -27,4 +27,4 @@ A test app that ships test codeunits and no install codeunit. Nothing in the app
 
 The near-miss variants fail the same way. Registering only some codeunits by explicit `SelectTestMethodsByCodeunit` calls means every new test codeunit needs an edit to the install codeunit and is skipped until someone remembers. Omitting the `Delete(true)` leaves a suite from a previous version in place, so renamed or removed test codeunits linger as broken lines. Omitting the `Commit()` makes `SelectTestMethodsByRange` operate on a suite the transaction has not yet written. Putting the registration in a `Subtype = Upgrade` codeunit instead of an install one skips it entirely on the first install, which is exactly the case a fresh CI container hits.
 
-See sample: `cmfrt-test-suite-install-codeunit.bad.al`.
+See sample: [`cmfrt-test-suite-install-codeunit.bad.al`](cmfrt-test-suite-install-codeunit.bad.al).

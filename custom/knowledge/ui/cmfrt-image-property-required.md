@@ -21,10 +21,10 @@ Set `Image` on every page action, every action group, every `fileuploadaction`, 
 
 Two platform limits are not violations of this rule and must not be reported as such: on `RoleCenter` pages, `Image` has no effect on navigation-bar actions or top-level action-bar actions — only on subgroups and their child actions — and on page fields `Image` is only valid for integer fields.
 
-See sample: `cmfrt-image-property-required.good.al`.
+See sample: [`cmfrt-image-property-required.good.al`](cmfrt-image-property-required.good.al).
 
 ## Anti Pattern
 
 Adding an action, action group, `fileuploadaction`, or cue field with no `Image`, which leaves the control with a default or blank icon and makes the CMFRT feature visibly inconsistent with the rest of the action bar. Equally wrong is setting `Image` to a guessed or remembered name that is not in the current icon library instead of verifying it against https://aka.ms/bcicons.
 
-See sample: `cmfrt-image-property-required.bad.al`.
+See sample: [`cmfrt-image-property-required.bad.al`](cmfrt-image-property-required.bad.al).

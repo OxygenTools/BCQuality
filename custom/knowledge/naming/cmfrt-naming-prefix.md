@@ -21,7 +21,7 @@ Name every object `"CMFRT <ABBR> <Name>"` — for example `"CMFRT GD Job"` or `"
 
 In the test app, name test codeunits `"CMFRT <ABBR> <Name> Tests"` and prefix every procedure the same way — `CMFRTGDLinkJobToPOISetsPOIId` rather than `LinkJobToPOISetsPOIId`. When renaming a handler procedure, update the `[HandlerFunctions]` attribute string in the same change: the attribute references the handler by name and a stale reference fails at runtime, not at compile time.
 
-See sample: `cmfrt-naming-prefix.good.al`.
+See sample: [`cmfrt-naming-prefix.good.al`](cmfrt-naming-prefix.good.al).
 
 ## Anti Pattern
 
@@ -29,4 +29,4 @@ Naming objects, fields, or procedures without the CMFRT prefix — for example `
 
 Treating the test app as exempt is the same violation — an unprefixed `[Test] procedure LinkJobToPOI()` or an unprefixed handler in `<AppName>_Test/src/` is a finding, not a stylistic preference.
 
-See sample: `cmfrt-naming-prefix.bad.al`.
+See sample: [`cmfrt-naming-prefix.bad.al`](cmfrt-naming-prefix.bad.al).

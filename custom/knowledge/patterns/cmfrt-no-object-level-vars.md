@@ -23,7 +23,7 @@ Declare each variable in the `var` block of the procedure that references it. To
 
 Before localizing a `Codeunit` variable, confirm the callee is stateless or `SingleInstance`. Two procedures each declaring `X: Codeunit Foo` get **separate instances**: if callers were relying on shared object-level state inside `Foo`, localizing breaks it silently. That is the caller-side face of exception 2 — keep the declaration at object scope and say why.
 
-See sample: `cmfrt-no-object-level-vars.good.al`.
+See sample: [`cmfrt-no-object-level-vars.good.al`](cmfrt-no-object-level-vars.good.al).
 
 ### Legitimate exceptions
 
@@ -46,7 +46,7 @@ Moving a translatable label from object to procedure scope changes its trans-uni
 
 Stateless helper codeunit instances, labels and working variables hoisted to the object's `var` section so several procedures can reach them, in an object that is not `SingleInstance`, not a DTO, not a `Run` boundary, not a page/report/xmlport binding, and not a manual subscriber instance.
 
-See sample: `cmfrt-no-object-level-vars.bad.al`.
+See sample: [`cmfrt-no-object-level-vars.bad.al`](cmfrt-no-object-level-vars.bad.al).
 
 ## Related
 

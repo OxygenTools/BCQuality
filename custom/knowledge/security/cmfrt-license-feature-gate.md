@@ -31,7 +31,7 @@ Applies to an app whose `app.json` declares `"publisher": "Astena"` and a `"name
 
 **Hand the new ordinal to the licence side.** A feature value not registered with the Astena licence service answers `false`, so the app ships read-only until someone registers it. This is an out-of-band human step: name it explicitly, with ordinal and feature name, in the design document and the ticket close-out.
 
-See sample: `cmfrt-license-feature-gate.good.al`.
+See sample: [`cmfrt-license-feature-gate.good.al`](cmfrt-license-feature-gate.good.al).
 
 ### Variable scope, and the legacy form
 
@@ -47,7 +47,7 @@ The wrapper's `Do` procedure takes `var ObjectId` and `var Handled`, matching th
 
 A CMFRT product app with no licence module at all, or with the module present and pages that never call it — the app then ships fully editable to tenants that never bought it, and nothing in the build catches it. Equally wrong: calling `"CMFRT LIF License Controller".CheckIfInLicense` straight from a page, which discards the `callerFeature`/`callerObject` context and the two override events; declaring several feature values, or an ordinal that does not match the enumextension's object ID; `Error`-ing or closing the page when the check returns `false`; gating a page through a `pageextension`; and omitting `[NonDebuggable]` anywhere on the chain.
 
-See sample: `cmfrt-license-feature-gate.bad.al`.
+See sample: [`cmfrt-license-feature-gate.bad.al`](cmfrt-license-feature-gate.bad.al).
 
 ## Related
 

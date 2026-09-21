@@ -21,10 +21,10 @@ Cross-cutting folders that are not object types are welcome alongside the featur
 
 Name each folder under `src/` after the feature or the cross-cutting role it contains, and put the install and upgrade codeunits in `src/02 Install` and `src/05 Upgrade`. The enforceable half of this rule is the negative one, and it needs no judgement: **a folder under `src/` whose name equals an AL object type is always a violation** — `Table`, `TableExtension`/`TableExt`, `Page`, `PageExtension`/`PageExt`, `Codeunit`, `Enum`, `EnumExtension`/`EnumExt`, `Interface`, `PermissionSet`, `Report`, `ReportExtension`, `Query`, `XmlPort`, with or without a trailing `s`. "Is this folder a feature?" is a judgement call; "is this folder an object type?" is not, and both a reviewer and CI can check the latter.
 
-See sample: `cmfrt-feature-folder-layout.good.al`.
+See sample: [`cmfrt-feature-folder-layout.good.al`](cmfrt-feature-folder-layout.good.al).
 
 ## Anti Pattern
 
 `src/Table/`, `src/Page/`, `src/Codeunit/`, `src/Enum/`, `src/Interface/`, `src/PageExtension/`, `src/TableExtension/`, `src/PermissionSet/` — the layout of the rejected `claude/pbr13-54` branch. Grouping by type scatters one feature across eight folders, so no folder answers a question anyone asks, and the folder tells the reader only what the file's own type segment already said. The install codeunit landing in `src/Codeunit/` instead of `src/02 Install/` is the same finding: the lifecycle folders exist precisely so install and upgrade are not buried among the feature codeunits.
 
-See sample: `cmfrt-feature-folder-layout.bad.al`.
+See sample: [`cmfrt-feature-folder-layout.bad.al`](cmfrt-feature-folder-layout.bad.al).

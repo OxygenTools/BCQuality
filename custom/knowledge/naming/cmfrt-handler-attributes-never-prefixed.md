@@ -25,7 +25,7 @@ Match the platform signature for the handler kind and declare the handler global
 
 AL0112 suppresses the remaining diagnostics on the declaration it lands on, so treat the attribute fix as step one, not the whole fix: rebuild and re-check the signature, the global scope, and that the handler is declared in the same test codeunit as the test method that lists it. Two cheap checks catch the whole class before a push — grep the test app for bracketed attributes whose name is not one of the thirteen above and not a non-handler platform attribute, and confirm every `HandlerFunctions('X')` resolves to a global `procedure X` carrying one of those attributes.
 
-See sample: `cmfrt-handler-attributes-never-prefixed.good.al`.
+See sample: [`cmfrt-handler-attributes-never-prefixed.good.al`](cmfrt-handler-attributes-never-prefixed.good.al).
 
 ## Anti Pattern
 
@@ -33,4 +33,4 @@ Applying the CMFRT prefix to the attribute — `[CMFRTAMConfirmHandler]`, `[CMFR
 
 The mirror-image error is dropping the prefix from the procedure name because the attribute must stay unprefixed — `[ConfirmHandler] procedure ConfirmHandler(...)` compiles, but an unprefixed member in a CMFRT extension violates `cmfrt-naming-prefix`. Also wrong: renaming the procedure without updating the `HandlerFunctions` string, and abbreviating an attribute to fit a name-length budget.
 
-See sample: `cmfrt-handler-attributes-never-prefixed.bad.al`.
+See sample: [`cmfrt-handler-attributes-never-prefixed.bad.al`](cmfrt-handler-attributes-never-prefixed.bad.al).

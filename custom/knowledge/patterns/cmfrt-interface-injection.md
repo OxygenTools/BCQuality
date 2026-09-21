@@ -17,10 +17,10 @@ The CMFRT interface injection pattern makes any table-level operation pluggable 
 
 Apply this pattern whenever a calculation or operation might need different behaviour in different customer deployments. The separation between the parameterless entry-point and the interface-accepting overload means a subscriber can inject an alternative implementation without modifying the base table. The default implementation remains the fallback for all extensions that do not subscribe.
 
-See sample: `cmfrt-interface-injection.good.al`.
+See sample: [`cmfrt-interface-injection.good.al`](cmfrt-interface-injection.good.al).
 
 ## Anti Pattern
 
 Placing the entire implementation directly inside the entry-point procedure with no interface and no `OnBefore` event. Monolithic entry points cannot be overridden by a subscriber without an AL override pattern, which is a breaking change for the overriding extension every time the base procedure is updated.
 
-See sample: `cmfrt-interface-injection.bad.al`.
+See sample: [`cmfrt-interface-injection.bad.al`](cmfrt-interface-injection.bad.al).

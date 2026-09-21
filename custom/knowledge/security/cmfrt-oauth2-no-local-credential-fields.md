@@ -21,13 +21,13 @@ Register the extension's OAuth2 details once through the *AddEdit OAuth2 Configu
 
 When migrating an extension that already has such fields, obsolete them rather than deleting them — see `custom/knowledge/breaking-changes/cmfrt-never-delete-always-obsolete.md` — and drop them from the setup page in the same change, so no user can enter a secret that is no longer read.
 
-See sample: `cmfrt-oauth2-no-local-credential-fields.good.al`.
+See sample: [`cmfrt-oauth2-no-local-credential-fields.good.al`](cmfrt-oauth2-no-local-credential-fields.good.al).
 
 ## Anti Pattern
 
 A setup table or table extension that declares a client secret, client ID, or tenant ID field — typically `Text[250]` with `DataClassification = CustomerContent` — and a setup page that exposes them for a user to fill in. The secret is then readable in the database, in a page, in an export, and in any RapidStart package built from that table. `ExtendedDatatype = Masked` on the page control does not fix this: it hides the value in the UI while it stays in plain text in the record.
 
-See sample: `cmfrt-oauth2-no-local-credential-fields.bad.al`.
+See sample: [`cmfrt-oauth2-no-local-credential-fields.bad.al`](cmfrt-oauth2-no-local-credential-fields.bad.al).
 
 ## See also
 
