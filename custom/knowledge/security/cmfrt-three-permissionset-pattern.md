@@ -24,3 +24,7 @@ See sample: [`cmfrt-three-permissionset-pattern.good.al`](cmfrt-three-permission
 Shipping fewer than three permission sets, omitting `IncludedPermissionSets` and enumerating the same object list in each set by hand, or granting `RIMD` access in a flat set that cannot be composed. Flat role sets that enumerate objects independently drift apart when tables are added or removed, and the resulting authorization gap is invisible until a user reports an access error in production.
 
 See sample: [`cmfrt-three-permissionset-pattern.bad.al`](cmfrt-three-permissionset-pattern.bad.al).
+
+## See also
+
+- `cmfrt-standard-table-object-permissions`: these sets grant `tabledata` only on non-standard tables; access to standard Microsoft tables goes on the `Permissions` property of the object that uses them.
