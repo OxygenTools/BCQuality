@@ -27,4 +27,4 @@ See sample: [`cmfrt-three-permissionset-pattern.bad.al`](cmfrt-three-permissions
 
 ## See also
 
-- `cmfrt-standard-table-object-permissions`: these sets grant `tabledata` only on the app's own tables; access to standard Microsoft tables goes on the `Permissions` property of the object that uses them.
+- `cmfrt-standard-table-object-permissions`: these sets grant `tabledata` only on non-standard tables; access to standard Microsoft tables goes on the `Permissions` property of the object that uses them.
