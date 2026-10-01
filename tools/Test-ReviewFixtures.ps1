@@ -303,6 +303,7 @@ foreach ($domain in $leafDomains) {
             $caseList.Add($case) | Out-Null
         }
     }
+
 }
 $cases = @($caseList)
 
