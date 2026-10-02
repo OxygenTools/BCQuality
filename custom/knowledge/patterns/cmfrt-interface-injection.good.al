@@ -1,5 +1,5 @@
 // Step 1: Interface with a single procedure.
-interface "CMFRT MS ICalcTotals"
+interface "CMFRT MS CalcTotalsInt"
 {
     procedure CMFRTMSCalcTotals(var MeasureState: Record "CMFRT MS Measure State");
 }
@@ -9,7 +9,7 @@ table 2045090 "CMFRT MS Measure State"
 {
     procedure CalcTotals()
     var
-        DefaultImpl: Codeunit "CMFRT MS CalcTotals Impl";
+        DefaultImpl: Codeunit "CMFRT MS CalcTotalsImpl";
         Handled: Boolean;
     begin
         OnBeforeDefaultImplCalcTotals(Rec, Handled);
@@ -18,7 +18,7 @@ table 2045090 "CMFRT MS Measure State"
         CalcTotals(DefaultImpl);
     end;
 
-    procedure CalcTotals(CalcImpl: Interface "CMFRT MS ICalcTotals")
+    procedure CalcTotals(CalcImpl: Interface "CMFRT MS CalcTotalsInt")
     begin
         CalcImpl.CMFRTMSCalcTotals(Rec);
     end;

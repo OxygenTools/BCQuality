@@ -8,12 +8,12 @@ table 2045750 "CMFRT GD POI Header"
     {
         field(2045750; "CMFRT GD No."; Code[20])
         {
-            Caption = 'No.';
+            Caption = 'CMFRT GD No.';
             DataClassification = CustomerContent;
         }
         field(2045752; "CMFRT GD Customer No."; Code[20])
         {
-            Caption = 'Customer No.';
+            Caption = 'CMFRT GD Customer No.';
             DataClassification = CustomerContent;
             TableRelation = Customer."No.";
         }
@@ -55,13 +55,13 @@ table 2045751 "CMFRT GD POI Line"
     {
         field(2045750; "CMFRT GD Document No."; Code[20])
         {
-            Caption = 'Document No.';
+            Caption = 'CMFRT GD Document No.';
             DataClassification = CustomerContent;
             TableRelation = "CMFRT GD POI Header"."CMFRT GD No.";
         }
         field(2045751; "CMFRT GD Line No."; Integer)
         {
-            Caption = 'Line No.';
+            Caption = 'CMFRT GD Line No.';
             DataClassification = CustomerContent;
         }
     }

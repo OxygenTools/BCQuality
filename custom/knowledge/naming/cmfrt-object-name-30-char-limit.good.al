@@ -9,14 +9,14 @@ table 2045733 "CMFRT GD POI Entry"
     {
         field(2045733; "CMFRT GD Entry No."; Integer)
         {
-            Caption = 'Entry No.';
+            Caption = 'CMFRT GD Entry No.';
             DataClassification = CustomerContent;
         }
         // Field names are measured the same way: 15 characters with the prefix.
         // The Caption carries the full wording, so the name does not have to.
         field(2045734; "CMFRT GD POI Name"; Text[100])
         {
-            Caption = 'Point Of Interest Name';
+            Caption = 'CMFRT GD Point Of Interest Name';
             DataClassification = CustomerContent;
         }
     }

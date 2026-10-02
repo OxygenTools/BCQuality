@@ -1,10 +1,10 @@
 // One codeunit — one global entry point — one interface.
-interface "CMFRT BA ICreateSalesPrice"
+interface "CMFRT BA CreateSalesPriceInt"
 {
     procedure CMFRTBACreateSalesPrice(ItemNo: Code[20]; UnitPrice: Decimal);
 }
 
-codeunit 2045710 "CMFRT BA CreateSalesPrice Impl" implements "CMFRT BA ICreateSalesPrice"
+codeunit 2045710 "CMFRT BA CreateSalesPriceImpl" implements "CMFRT BA CreateSalesPriceInt"
 {
     procedure CMFRTBACreateSalesPrice(ItemNo: Code[20]; UnitPrice: Decimal)
     begin

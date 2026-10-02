@@ -15,7 +15,7 @@ table 55008 "CMFRT AQ Setup"
     {
         field(1; "Primary Key"; Code[10])
         {
-            Caption = 'Primary Key';
+            Caption = 'CMFRT AQ Primary Key';
             DataClassification = CustomerContent;
         }
         field(55015; "CMFRT AQ FS Stuck Thresh. Min."; Integer)

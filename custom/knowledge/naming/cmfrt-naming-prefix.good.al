@@ -11,7 +11,7 @@ tableextension 2045660 "CMFRT GD Job Ext" extends Job
         field(2045081; "CMFRT GD POI ID"; Guid)
         {
             DataClassification = CustomerContent;
-            Caption = 'POI ID';
+            Caption = 'CMFRT GD POI ID';
         }
     }
 }

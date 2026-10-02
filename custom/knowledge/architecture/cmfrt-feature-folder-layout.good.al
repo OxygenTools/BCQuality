@@ -10,7 +10,7 @@ table 2045086 "CMFRT AM Designation"
     {
         field(2045086; "CMFRT AM Entry No."; Integer)
         {
-            Caption = 'Entry No.';
+            Caption = 'CMFRT AM Entry No.';
             DataClassification = CustomerContent;
         }
     }
