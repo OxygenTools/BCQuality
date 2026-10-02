@@ -10,7 +10,7 @@ table 2045085 "CMFRT AM Address"
     {
         field(2045085; "CMFRT AM Address No."; Code[20])
         {
-            Caption = 'Address No.';
+            Caption = 'CMFRT AM Address No.';
             DataClassification = CustomerContent;
         }
     }
@@ -34,7 +34,7 @@ tableextension 2045091 "CMFRT AM Contact" extends Contact
     {
         field(2045091; "CMFRT AM Address No."; Code[20])
         {
-            Caption = 'Address No.';
+            Caption = 'CMFRT AM Address No.';
             DataClassification = CustomerContent;
             TableRelation = "CMFRT AM Address"."CMFRT AM Address No.";
         }

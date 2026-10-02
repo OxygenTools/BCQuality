@@ -9,17 +9,17 @@ table 2045129 "CMFRT CC Azure App Setup"
     {
         field(2045130; "CMFRT CC Unique Code"; Code[20])
         {
-            Caption = 'Unique Code';
+            Caption = 'CMFRT CC Unique Code';
             DataClassification = CustomerContent;
         }
         field(2045140; "CMFRT CC Destination Path"; Text[250])
         {
-            Caption = 'Destination Path';
+            Caption = 'CMFRT CC Destination Path';
             DataClassification = CustomerContent;
         }
         field(2045180; "CMFRT CC API"; Text[250])
         {
-            Caption = 'API';
+            Caption = 'CMFRT CC API';
             DataClassification = CustomerContent;
             Editable = false;
         }
@@ -27,7 +27,7 @@ table 2045129 "CMFRT CC Azure App Setup"
         // Migrated away: obsoleted rather than deleted, and no longer shown on the page.
         field(2045100; "CMFRT CC Client ID"; Text[250])
         {
-            Caption = 'Client ID';
+            Caption = 'CMFRT CC Client ID';
             DataClassification = CustomerContent;
             ObsoleteState = Pending;
             ObsoleteReason = 'Moved to the central OAuth2 configuration in CMFRT System.';
@@ -35,7 +35,7 @@ table 2045129 "CMFRT CC Azure App Setup"
         }
         field(2045110; "CMFRT CC Client Secret"; Text[250])
         {
-            Caption = 'Client Secret';
+            Caption = 'CMFRT CC Client Secret';
             DataClassification = CustomerContent;
             ObsoleteState = Pending;
             ObsoleteReason = 'Secrets are retrieved from the Astena Key Vault, never stored.';
@@ -43,7 +43,7 @@ table 2045129 "CMFRT CC Azure App Setup"
         }
         field(2045120; "CMFRT CC Tenant ID"; Text[250])
         {
-            Caption = 'Tenant ID';
+            Caption = 'CMFRT CC Tenant ID';
             DataClassification = CustomerContent;
             ObsoleteState = Pending;
             ObsoleteReason = 'Moved to the central OAuth2 configuration in CMFRT System.';
