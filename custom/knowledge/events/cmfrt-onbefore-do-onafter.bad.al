@@ -6,6 +6,8 @@ codeunit 55043 "CMFRT AQ FS ProForma Meth"
         GeneralPostingSetup: Record "General Posting Setup";
         IsHandled: Boolean;
     begin
+        // Redundant: a fresh local Boolean is already false and is raised once.
+        IsHandled := false;
         OnBeforeCMFRTAQFSResolveItemToGLAcc(SalesLine, IsHandled);
         if IsHandled then
             exit;
