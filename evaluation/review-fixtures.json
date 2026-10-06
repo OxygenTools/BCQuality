@@ -42,6 +42,7 @@
     "events": {
       "articles": [
         "reset-ishandled-only-when-the-value-can-carry-over",
+        "cmfrt-onbefore-do-onafter",
         "changecompany-runs-triggers-in-the-calling-company",
         "database-trigger-setup-flags-may-only-be-set-to-true"
       ]
