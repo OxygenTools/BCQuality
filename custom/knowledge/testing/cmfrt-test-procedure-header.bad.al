@@ -1,4 +1,4 @@
-codeunit 85001 "CMFRT WDS Test Mand Flds SH"
+codeunit 2045701 "CMFRT WDS Test Mand Flds SH"
 {
     Subtype = Test;
     TestPermissions = Disabled;

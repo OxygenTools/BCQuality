@@ -1,6 +1,6 @@
 // Test app CMFRT_Woodstoxx_Test. Numbers 01919 and 01920 were taken from the shared
 // TestNbrRegistry ledger through the testnbr skill, for ticket P25034-115.
-codeunit 85001 "CMFRT WDS Test Mand Flds SH"
+codeunit 2045701 "CMFRT WDS Test Mand Flds SH"
 {
     Subtype = Test;
     TestPermissions = Disabled;
