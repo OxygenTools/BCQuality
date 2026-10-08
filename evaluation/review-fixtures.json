@@ -5,6 +5,10 @@
   "minimumCleanRate": 1.0,
   "coverageWaivers": [
     {
+      "path": "custom/knowledge/testing/cmfrt-test-procedure-header.md",
+      "reason": "The rule lives entirely in comments ([TESTNBR]/[ISSUENBR]/[SCENARIO]), and prepared fixture cases strip comments, so the good and bad samples become indistinguishable. The review skill worklists it structurally from [Test] instead."
+    },
+    {
       "path": "microsoft/knowledge/testing/given-blocks-must-cover-full-precondition-chain.md",
       "reason": "Ranks outside the 10-candidate cut-off once the custom testing articles are in the domain: the prepared case loses the [GIVEN] comments its keywords match, and [Test] part-matches the custom test-* keywords."
     }
