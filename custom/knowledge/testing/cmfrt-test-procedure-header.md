@@ -1,7 +1,7 @@
 ---
 bc-version: [all]
 domain: testing
-keywords: [testnbr, issuenbr, testnbr-ledger, jira-key, issue-number]
+keywords: [testnbr, issuenbr, testnbr-ninja, jira-key, issue-number]
 technologies: [al]
 countries: [w1]
 application-area: [all]
@@ -24,7 +24,7 @@ Write the header as the first comments inside the procedure body, after `begin` 
 - `// [SCENARIO] …` — one falsifiable business claim in plain language that complements the procedure name rather than repeating it.
 - `// [GIVEN] …`, `// [WHEN] …`, `// [THEN] …` — placed directly above the setup, the single action under test, and the assertions they describe. A long `[GIVEN]` may continue on the next comment line without repeating the tag.
 
-Take `[TESTNBR]` values only from the shared TestNbrRegistry ledger through the `testnbr` skill (`~/.claude/skills/testnbr/`), one number per new `[Test]` procedure, passing the ticket key and the app name. The ledger is the only authority on which numbers are free; the skill's own documentation describes how a number is taken. If the skill fails, stop and report the failure — never fall back to another source. An existing test keeps its number when it is edited, renamed or moved to another codeunit; a deleted test's number is not reused.
+Take `[TESTNBR]` values only through the `testnbr` skill (AL Object ID Ninja, `~/.claude/skills/testnbr/`), one number per new `[Test]` procedure. Every developer shares one Ninja counter for test numbers, so it is the only authority on which numbers are free; the skill's own documentation describes how a number is assigned and padded. If the skill or Ninja fails, stop and report the failure — never fall back to another source. Never unassign a `[TESTNBR]`: Ninja hands a released number out again, so a number given back ends up on a second test. An existing test keeps its number when it is edited, renamed or moved to another codeunit; a deleted test's number is not reused.
 
 A codeunit-level `[FEATURE]` comment is optional in CMFRT test apps (almost none use it) and is not a finding when absent.
 
@@ -34,8 +34,8 @@ See sample: [`cmfrt-test-procedure-header.good.al`](cmfrt-test-procedure-header.
 
 A `[Test]` procedure with no `[TESTNBR]`/`[ISSUENBR]` lines, or with the header moved below the setup code. The test runs, but it cannot be traced to a ticket and it holds no place in the shared numbering, so the next test written anywhere in the estate may take a number this one should have had.
 
-A `[TESTNBR]` that is not five zero-padded digits. The current test apps contain unpadded values (`458`, `1364`), six-digit values (`001047`), per-app series (`SP-030`, `SP-031`, …) and placeholders (`TBD`). Each breaks sorting and lookup against the ledger.
+A `[TESTNBR]` that is not five zero-padded digits. The current test apps contain unpadded values (`458`, `1364`), six-digit values (`001047`), per-app series (`SP-030`, `SP-031`, …) and placeholders (`TBD`). Each breaks sorting and cross-app search, and none of them can have come from the shared Ninja counter.
 
-A `[TESTNBR]` picked by hand: asking the user for a number, taking the highest number in the current code plus one, reading the next free value from the old shared Excel workbook, or inventing a number when the `testnbr` skill fails. The code of one app cannot show numbers already taken in another, and two developers working in parallel both see the same maximum. This is how the existing estate came to hold 60 five-digit values that occur on more than one test.
+A `[TESTNBR]` picked by hand: asking the user for a number, taking the highest number in the current code plus one, reading the next free value from the old shared Excel workbook, inventing a number when the `testnbr` skill fails, or releasing a number with `ninja_unassignObjectId` so that Ninja hands it out again. The code of one app cannot show numbers already taken in another, and two developers working in parallel both see the same maximum. This is how the existing estate came to hold 60 five-digit values that occur on more than one test.
 
 See sample: [`cmfrt-test-procedure-header.bad.al`](cmfrt-test-procedure-header.bad.al).

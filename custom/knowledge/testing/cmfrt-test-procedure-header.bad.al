@@ -4,7 +4,7 @@ codeunit 2045701 "CMFRT WDS Test Mand Flds SH"
     TestPermissions = Disabled;
 
     // Anti-pattern: no header at all. The test cannot be traced to a ticket and
-    // holds no number in the shared ledger.
+    // holds no number from the shared Ninja counter.
     [Test]
     procedure CMFRTWDSQuoteAllFieldsFilledNoError()
     var
