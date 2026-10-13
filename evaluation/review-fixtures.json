@@ -5,6 +5,10 @@
   "minimumCleanRate": 1.0,
   "coverageWaivers": [
     {
+      "path": "custom/knowledge/breaking-changes/cmfrt-never-delete-always-obsolete.md",
+      "reason": "The defect is a deleted or renamed member, which only a diff shows. A prepared single-file case has no removed lines, and the bad sample marks the deletion only in a comment that preparation strips, so the good and bad samples cannot be told apart. The review skill worklists the rule from the removed lines of the diff instead."
+    },
+    {
       "path": "custom/knowledge/testing/cmfrt-test-procedure-header.md",
       "reason": "The rule lives entirely in comments ([TESTNBR]/[ISSUENBR]/[SCENARIO]), and prepared fixture cases strip comments, so the good and bad samples become indistinguishable. The review skill worklists it structurally from [Test] instead."
     },
