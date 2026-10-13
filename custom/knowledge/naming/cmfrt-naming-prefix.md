@@ -13,11 +13,15 @@ application-area: [all]
 
 Every object, field, and procedure in a CMFRT extension must carry the `CMFRT XXX` prefix, where `XXX` is the product or customer abbreviation (for example `GD` for Geodynamics, `BA` for Batch Automation, `JO` for Jobs). The prefix applies to tables, table extensions, pages, page extensions, codeunits, interfaces, reports, enum values, and to all global and local procedures. Object and field names use the three-part form `CMFRT <ABBR> <Descriptive Name>` with spaces. Procedure names use the concatenated form `CMFRT<ABBR><ProcedureName>` with no spaces.
 
+**Exception: CRM proxy tables.** A table with `TableType = CRM` mirrors a Dataverse entity. Its object name, its captions and its procedures carry the prefix as usual. Its field names do not: each field name keeps the Dataverse logical name that its `ExternalName` holds, so the AL field maps to the entity column one to one (decision of 12 October 2026). A missing prefix on such a field name is not a finding.
+
 The rule is identical in the companion test app (`<AppName>_Test`). Test codeunits, and every procedure inside them, carry the same prefix: `[Test]` procedures, `[HandlerFunctions]` handlers, `[MessageHandler]`/`[ConfirmHandler]`/`[ModalPageHandler]` procedures, `[Scope('OnPrem')]` helpers, and local setup or assertion helpers. The test app is not exempt because it ships as its own extension and its members collide the same way. What carries the prefix is the procedure *name*; the attribute above it never does — `[ConfirmHandler]`, `[Test]` and `[HandlerFunctions]` are fixed platform tokens outside the scope of `mandatoryPrefix`, and prefixing one is a compile error. See `cmfrt-handler-attributes-never-prefixed`.
 
 ## Best Practice
 
 Name every object `"CMFRT <ABBR> <Name>"` — for example `"CMFRT GD Job"` or `"CMFRT GD POI"`. Name every field `"CMFRT <ABBR> <FieldName>"` — for example `"CMFRT GD POI ID"`. Name every procedure `CMFRT<ABBR><ProcedureName>` — for example `CMFRTGDCalculatePOIDistance`. The procedure name must be self-describing: a reader must understand what the procedure does without reading its body. Local procedures follow the same rule.
+
+In a `TableType = CRM` table, name the object `"CMFRT <ABBR> CRM <Entity>"` and give every field a prefixed `Caption`, but keep the field name equal to the Dataverse logical name: `field(55005; "alt_Name"; Text[100])` with `ExternalName = 'alt_name'` and `Caption = 'CMFRT AQ Language Name'`.
 
 In the test app, name test codeunits `"CMFRT <ABBR> <Name> Tests"` and prefix every procedure the same way — `CMFRTGDLinkJobToPOISetsPOIId` rather than `LinkJobToPOISetsPOIId`. When renaming a handler procedure, update the `[HandlerFunctions]` attribute string in the same change: the attribute references the handler by name and a stale reference fails at runtime, not at compile time.
 
