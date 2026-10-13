@@ -29,6 +29,7 @@ Leave alone, and report as debt instead:
 - Anything that renames or removes a public identifier — an object, field, procedure, enum value, or permission set. That is a breaking-changes matter with its own obsoletion procedure, not a cleanup.
 - File renames and moves. Correct for a new file; a repo-wide rename inside a feature ticket is not.
 - Anything needing a design decision — splitting a codeunit, introducing an interface, choosing an event signature, writing tooltip text where none exists anywhere.
+- A property change that alters behaviour or layout: `PageType`, `Editable` or `Visible` on an existing object or control, or the `ToolTip` or `ApplicationArea` of a standard field. Only the ticket can ask for it. A hunk that neither the ticket nor this list explains is an untraced change, and a review reports it: in 5 DevGIT.AL PRs from 1 September to 12 October 2026, reviewers removed such changes (a page type, a page-context guard, standard-field properties, code kept for a retired mechanism).
 
 Apply a budget. When the count of pre-existing violations is large enough that remediation would dominate the change, remediate none of them and report the rule, the count, and the object so the debt is visible and can be ticketed. Half a migration is worse than none: it leaves the same two-shapes ambiguity the rule exists to remove.
 
