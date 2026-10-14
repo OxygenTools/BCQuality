@@ -38,5 +38,6 @@ codeunit 2045735 "CMFRT GD POI Distance"
     // fully self-describing per cmfrt-naming-prefix.md.
     procedure CMFRTGDCalculatePointOfInterestDistance(POIId: Guid): Decimal
     begin
+        // Body left out: this sample shows the declaration only.
     end;
 }

@@ -42,6 +42,7 @@ codeunit 2045762 "CMFRT GD Registration Sweep"
             CMFRTGDRegistration.Modify(true);
         end;
 
+        // Codeunit.Run for the next row cannot start inside an open write transaction.
         Commit();
     end;
 }
