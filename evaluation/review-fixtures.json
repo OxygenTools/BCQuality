@@ -192,7 +192,9 @@
         "page-client-expression-must-not-use-in-list",
         "rolecenter-permission-gating-must-use-accessbypermission",
         "notification-recall-needs-known-id",
-        "list-page-document-routing-uses-page-management"
+        "list-page-document-routing-uses-page-management",
+        "cmfrt-tooltip-explains-the-field",
+        "cmfrt-page-teaching-tip-and-search-terms"
       ]
     },
     "upgrade": {
