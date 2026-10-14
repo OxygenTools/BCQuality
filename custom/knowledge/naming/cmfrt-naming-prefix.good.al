@@ -21,10 +21,12 @@ codeunit 2045700 "CMFRT GD Job Mgmt"
 {
     procedure CMFRTGDLinkJobToPOI(JobNo: Code[20]; POIId: Guid)
     begin
+        // Body left out: this sample shows the declaration only.
     end;
 
     local procedure CMFRTGDValidatePOIExists(POIId: Guid): Boolean
     begin
+        // Body left out: this sample shows the declaration only.
     end;
 }
 
@@ -37,6 +39,7 @@ codeunit 2045750 "CMFRT GD Job Mgmt Tests"
     [HandlerFunctions('CMFRTGDHandlePOIConfirm')]
     procedure CMFRTGDLinkJobToPOISetsPOIId()
     begin
+        // Body left out: this sample shows the declaration only.
     end;
 
     [ConfirmHandler]
@@ -47,5 +50,6 @@ codeunit 2045750 "CMFRT GD Job Mgmt Tests"
 
     local procedure CMFRTGDCreateJobWithPOI(var Job: Record Job)
     begin
+        // Body left out: this sample shows the declaration only.
     end;
 }

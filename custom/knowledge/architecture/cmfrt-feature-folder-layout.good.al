@@ -31,6 +31,7 @@ codeunit 2045100 "CMFRT AM FindOverlapImpl" implements "CMFRT AM FindOverlapInt"
 {
     procedure CMFRTAMFindOverlap(AddressNo: Code[20]): Boolean
     begin
+        // Body left out: this sample shows the declaration only.
     end;
 }
 
@@ -43,5 +44,6 @@ codeunit 2045109 "CMFRT AM Install"
 
     trigger OnInstallAppPerCompany()
     begin
+        // Body left out: this sample shows the declaration only.
     end;
 }
