@@ -1,7 +1,7 @@
 ---
 bc-version: [all]
 domain: patterns
-keywords: [global-var, object-level-var, local-scope, parameter-passing, singleinstance, dto, codeunit-run, page-binding, event-subscriber-instance]
+keywords: [global-var, object-level-var, local-scope, parameter-passing, singleinstance, dto, codeunit-run, page-binding, event-subscriber-instance, session-state]
 technologies: [al]
 countries: [w1]
 application-area: [all]
@@ -29,7 +29,7 @@ See sample: [`cmfrt-no-object-level-vars.good.al`](cmfrt-no-object-level-vars.go
 
 Object scope is correct — and localizing is a defect — in exactly these cases. Each is structural: the platform or the object's declared purpose requires it.
 
-1. **`SingleInstance = true` codeunits.** The object-level state *is* the feature: caches, rate limiters, session-scoped buffers and `Dictionary` members.
+1. **`SingleInstance = true` codeunits.** The object-level state *is* the feature: caches, rate limiters, session-scoped buffers and `Dictionary` members. The codeunit holds only that state and the procedures that set, get and clear it. The logic that uses the state goes into a normal codeunit, which reads the state through those procedures. The state lives for the whole session. When the logic stays in the `SingleInstance` codeunit, each procedure in it can read and change that state. A reader then cannot see which procedure depends on it. In PR 14598 a `SingleInstance` codeunit held most of a feature, and the review flagged it.
 2. **DTO / context codeunits passed `var` between objects.** Their fields are the payload the getters and setters exist to expose. These *are* the parameter-passing mechanism this rule asks for, so they satisfy its intent rather than violating it.
 3. **`Codeunit.Run` isolation boundaries.** Object-level state is the only way in and out of `OnRun`. A `[TryFunction]` is not a substitute — it does not roll back the database write. See `patterns/cmfrt-codeunit-run-not-tryfunction`.
 4. **Variables bound to a property or a control source expression** on a Page, Report request page, or XmlPort — `StyleExpr = EnabledStyleTxt`, `Visible = ShowDetails`, `field(SchemaJsonControl; SchemaJson)`. AL resolves these against object scope only.
