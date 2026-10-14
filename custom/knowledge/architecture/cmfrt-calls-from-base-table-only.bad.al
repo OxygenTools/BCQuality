@@ -12,3 +12,28 @@ codeunit 2045720 "CMFRT BA Sales Subscribers"
         SyncImpl.CMFRTBASyncPostedSalesDoc(SalesHeader."No.");
     end;
 }
+
+// The table-extension procedure holds the logic itself (PR 14713): it marks the
+// service orders, counts them and opens a page. Only the call belongs here.
+tableextension 2045730 "CMFRT ST Purchase Header" extends "Purchase Header"
+{
+    procedure CMFRTSTShowServiceOrders()
+    var
+        ServiceHeader: Record "Service Header";
+        CMFRTSTServiceOrderMarker: Codeunit "CMFRT ST ServiceOrderMarker";
+    begin
+        CMFRTSTServiceOrderMarker.CMFRTSTMarkServiceOrders(Rec, ServiceHeader);
+        ServiceHeader.MarkedOnly(true);
+        case ServiceHeader.Count() of
+            0:
+                exit;
+            1:
+                begin
+                    ServiceHeader.FindFirst();
+                    Page.Run(Page::"Service Order", ServiceHeader);
+                end;
+            else
+                Page.Run(Page::"Service Orders", ServiceHeader);
+        end;
+    end;
+}

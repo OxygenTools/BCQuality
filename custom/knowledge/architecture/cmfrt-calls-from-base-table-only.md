@@ -1,7 +1,7 @@
 ---
 bc-version: [all]
 domain: architecture
-keywords: [codeunit, base-table, entry-point, coupling, architecture, cross-codeunit, subscriber]
+keywords: [codeunit, base-table, entry-point, coupling, architecture, cross-codeunit, subscriber, thin-shell, table-extension, table-procedure]
 technologies: [al]
 countries: [w1]
 application-area: [all]
@@ -11,16 +11,20 @@ application-area: [all]
 
 ## Description
 
-In the CMFRT extension architecture, all calls to implementation codeunits must originate from the base-table object. No AL object other than the base table may call a CMFRT implementation codeunit directly. Event subscriber codeunits handle platform or application events and call the base table's entry-point procedures — not the implementation codeunit directly. Pages and reports call base-table procedures. This keeps the base table as the single integration point for all business-logic calls and ensures that `OnBefore`/`OnAfter` integration events fire consistently regardless of where a workflow begins.
+In the CMFRT extension architecture, only the base table calls a CMFRT implementation codeunit. No other AL object calls it directly. An event subscriber codeunit handles a platform or application event and calls an entry-point procedure of the base table. Pages and reports also call base-table procedures. The base table is then the one integration point for all business logic. Its `OnBefore` and `OnAfter` integration events fire each time, from every start point of a workflow.
 
 ## Best Practice
 
-When a subscriber codeunit handles an event and needs to trigger a CMFRT operation, it calls the relevant base-table procedure. When a page action initiates business logic, it calls the base-table procedure. The implementation codeunit is an internal detail of the base table and should never appear in the variable declarations of pages, reports, or subscriber codeunits.
+A subscriber codeunit that starts a CMFRT operation calls the base-table procedure for it. A page action that starts business logic also calls the base-table procedure. The implementation codeunit is an internal part of the base table. Do not declare it in a page, a report or a subscriber codeunit.
+
+The base-table procedure is a thin shell. Its body holds one call into the implementation or `Meth` codeunit, with or without the `OnBefore` event and the handled exit around it. The same rule applies to a procedure in a table extension. Filters, `Mark` and `MarkedOnly`, a `case` on the result, `Page.Run` and the other steps of the logic go into the codeunit. There, the logic sits inside the `OnBefore`/`Do`/`OnAfter` bracket of `custom/knowledge/events/cmfrt-onbefore-do-onafter`. A procedure that only returns a value from the fields of the record, with no filter, loop or page, can stay in the table. In PR 14713 a table-extension procedure marked service orders, counted them and opened a page. The review asked to move all of it into a codeunit and keep only the call in the table extension.
 
 See sample: [`cmfrt-calls-from-base-table-only.good.al`](cmfrt-calls-from-base-table-only.good.al).
 
 ## Anti Pattern
 
-Calling an implementation codeunit directly from a page, report, subscriber codeunit, or any object other than the base table. Direct calls bypass the base table's integration events, making the operation invisible to dependent extensions that subscribed to those events. This also creates hidden coupling between the caller and the implementation, which breaks when the implementation codeunit is renamed or replaced under the interface.
+A page, a report, a subscriber codeunit or another object that calls an implementation codeunit directly. The direct call skips the integration events of the base table. A dependent extension that subscribes to those events does not see the operation. The call also couples the caller to the implementation. That link breaks when a change renames the implementation codeunit or replaces it behind the interface.
+
+A table or table-extension procedure that holds the logic itself: it filters or marks records, branches on the result, or opens a page. The table then does the work of a codeunit, and the logic has no `OnBefore` or `OnAfter` event that a dependent extension can use.
 
 See sample: [`cmfrt-calls-from-base-table-only.bad.al`](cmfrt-calls-from-base-table-only.bad.al).
