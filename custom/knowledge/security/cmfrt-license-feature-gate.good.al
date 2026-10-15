@@ -69,7 +69,7 @@ page 58760 "CMFRT CNTD PstdApprEntries"
                 field("CMFRT CNTD Document No."; Rec."Document No.")
                 {
                     ApplicationArea = CMFRTBouwApplicationArea;
-                    ToolTip = 'Specifies the value of the Document No. field.';
+                    ToolTip = 'Specifies the number of the document that waits for approval.';
                 }
             }
         }
