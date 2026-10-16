@@ -202,7 +202,8 @@
       "articles": [
         "initvalue-does-not-update-existing-rows",
         "upgrade-tag-logic-must-not-nest-deeply",
-        "no-changecompany-in-upgrade"
+        "no-changecompany-in-upgrade",
+        "cmfrt-upgrade-tags-in-upgrade-codeunit"
       ],
       "context": "The extended table existed in the previous app version and already contains rows."
     },
