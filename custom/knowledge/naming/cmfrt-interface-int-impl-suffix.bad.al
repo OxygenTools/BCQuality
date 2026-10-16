@@ -28,8 +28,9 @@ interface "CMFRT AM IGet Cur.Desig."
 }
 
 // Anti-pattern: the descriptive part was planned at the full 21-character
-// budget without the suffix, so neither Int nor Impl fits — this name is 36.
-// The budget must be counted with the suffix: at most 17 characters shared.
+// budget of "CMFRT AM " without the suffix, so neither Int nor Impl fits — this
+// name is 36. Count the budget with the suffix: the budget minus 4, so at most
+// 17 characters shared.
 // Correct: "CMFRT AM RelDocCollectInt"
 interface "CMFRT AM Related Document CollectInt"
 {

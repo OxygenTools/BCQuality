@@ -1,5 +1,5 @@
 // 18 characters including the prefix: the descriptive part "POI Entry" is 9,
-// well inside the 21-character budget, with room for a later "Line" or "Buffer".
+// well inside the 21-character budget that "CMFRT GD " leaves, with room for a later "Line" or "Buffer".
 table 2045733 "CMFRT GD POI Entry"
 {
     Caption = 'POI Entry';
@@ -30,13 +30,24 @@ table 2045733 "CMFRT GD POI Entry"
     }
 }
 
-// Exactly at the 21-character budget (30 in total) and still readable: the
+// Exactly at the 21-character budget of "CMFRT GD " (30 in total) and still readable: the
 // descriptive part was planned around the prefix instead of shortened after it.
 codeunit 2045735 "CMFRT GD POI Distance"
 {
     // Procedure names are not bound by the 30-character limit, so they stay
     // fully self-describing per cmfrt-naming-prefix.md.
     procedure CMFRTGDCalculatePointOfInterestDistance(POIId: Guid): Decimal
+    begin
+        // Body left out: this sample shows the declaration only.
+    end;
+}
+
+// A three-letter abbreviation leaves a smaller budget: "CMFRT GDW " is 10
+// characters, so the descriptive part gets 20. "Purch. Price Review" is 19,
+// 29 in total, and uses the base-application abbreviation "Purch.".
+codeunit 2045736 "CMFRT GDW Purch. Price Review"
+{
+    procedure CMFRTGDWReviewPurchasePrices(DocumentNo: Code[20])
     begin
         // Body left out: this sample shows the declaration only.
     end;

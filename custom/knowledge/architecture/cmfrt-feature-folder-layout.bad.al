@@ -48,3 +48,14 @@ codeunit 2045109 "CMFRT AM Install"
     begin
     end;
 }
+
+// Anti-pattern path: src/05 Logic/CMFRTAMOverlapCheck.Codeunit.al
+// 05 is the number of the Upgrade folder in every CMFRT app. The code in it
+// belongs to a feature, so it goes into that feature folder without a number.
+// Correct: src/Designation/CMFRTAMOverlapCheck.Codeunit.al
+codeunit 2045110 "CMFRT AM OverlapCheck"
+{
+    procedure CMFRTAMCheckOverlap(AddressNo: Code[20]): Boolean
+    begin
+    end;
+}
