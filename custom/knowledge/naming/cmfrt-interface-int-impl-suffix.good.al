@@ -1,6 +1,6 @@
 // File: CMFRTAMFindOverlapInt.Interface.al
 // The suffix is glued to the descriptive part: "FindOverlapInt" is 14 of the
-// 21-character descriptive budget, 23 in total with the 9-character prefix.
+// 21-character budget that the 9-character prefix "CMFRT AM " leaves, 23 in total.
 interface "CMFRT AM FindOverlapInt"
 {
     procedure CMFRTAMFindOverlap(AddressNo: Code[20]; FromDate: Date; ToDate: Date): Boolean

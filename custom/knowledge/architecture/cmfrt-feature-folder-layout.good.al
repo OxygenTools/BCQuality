@@ -36,8 +36,9 @@ codeunit 2045100 "CMFRT AM FindOverlapImpl" implements "CMFRT AM FindOverlapInt"
 }
 
 // Path: src/02 Install/CMFRTAMInstall.Codeunit.al
-// The reserved lifecycle folder. "02 Install" and "05 Upgrade" are fixed names,
-// numbered so they sort above the feature folders.
+// A folder of the fixed scheme. "02 Install" and "05 Upgrade" always carry their
+// number. "01 BaseAppExt", "03 Setup" and "04 Subscribers" carry it only in a
+// repo that already numbers these folders, and use the bare name otherwise.
 codeunit 2045109 "CMFRT AM Install"
 {
     Subtype = Install;
