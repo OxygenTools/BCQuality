@@ -13,7 +13,7 @@ application-area: [all]
 
 `src/` is organised around what the code does, not what kind of AL object it is. A feature folder holds that feature's table, its pages, its interface and its implementation codeunits side by side, so a developer opening one folder sees the whole concern. `CMFRT_Indexation/src` ships `IndexationFormula/`, `IndexationParameter/`, `IndexationValue/` and `RecordIndexation/` exactly that way. A small app may keep its objects flat directly under `src/` — `CMFRT_Guarantee` does — which is the same principle with one implicit feature.
 
-Two lifecycle folders start with a number and are reserved: `02 Install` holds the `Subtype = Install` codeunit, `05 Upgrade` holds the `Subtype = Upgrade` codeunit. The numeric prefix keeps them at the top of the listing and out of the feature namespace; both names are fixed and are not renamed or renumbered per app.
+Two lifecycle folders start with a number and are reserved: `02 Install` holds the `Subtype = Install` codeunit, `05 Upgrade` holds the `Subtype = Upgrade` codeunit. The numeric prefix keeps them at the top of the listing and out of the feature namespace; both names are fixed and are not renamed or renumbered per app. The one upgrade codeunit also holds the upgrade tags and their subscribers (`upgrade/cmfrt-upgrade-tags-in-upgrade-codeunit`).
 
 Cross-cutting folders that are not object types are welcome alongside the feature folders — `Permissions/`, `License/`, `BaseAppExt/` for extensions of base application objects, `Subscribers/` for event subscriber codeunits. They group by role, which is the same kind of answer as a feature.
 
