@@ -195,7 +195,8 @@
         "notification-recall-needs-known-id",
         "list-page-document-routing-uses-page-management",
         "cmfrt-tooltip-explains-the-field",
-        "cmfrt-page-teaching-tip-and-search-terms"
+        "cmfrt-page-teaching-tip-and-search-terms",
+        "cmfrt-promptdialog-systemactions-area"
       ]
     },
     "upgrade": {
