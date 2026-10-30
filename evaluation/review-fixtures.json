@@ -15,9 +15,26 @@
     {
       "path": "microsoft/knowledge/testing/given-blocks-must-cover-full-precondition-chain.md",
       "reason": "Ranks outside the 10-candidate cut-off once the custom testing articles are in the domain: the prepared case loses the [GIVEN] comments its keywords match, and [Test] part-matches the custom test-* keywords."
+    },
+    {
+      "path": "microsoft/knowledge/reporting/do-not-rename-or-remove-shipped-report-dataset-columns.md",
+      "reason": "The defect is a change relative to a released version; a single neutralized sample cannot show which column names shipped before."
+    },
+    {
+      "path": "microsoft/knowledge/reporting/reportextension-layouts-are-not-selected-automatically.md",
+      "reason": "The defect is the expectation that the layout becomes the default; the code alone is identical to a legitimate optional layout once comments are removed."
     }
   ],
   "overrides": {
+    "copilot": {
+      "articles": [
+        "call-azure-openai-through-the-ai-module",
+        "check-aoai-operation-response-before-using-output",
+        "keep-user-input-out-of-the-system-message",
+        "register-copilot-capability-on-install-and-upgrade",
+        "save-promptdialog-proposals-only-when-the-user-keeps-them"
+      ]
+    },
     "agents": {
       "article": "wire-all-three-agent-interfaces"
     },
@@ -27,6 +44,8 @@
     "data-modeling": {
       "articles": [
         "activate-new-price-calculation-handler-via-onfindsupportedsetup",
+        "business-state-must-have-a-domain-owner",
+        "calcfields-blob-before-reading-its-stream",
         "check-blocked-in-referencing-code-not-in-master",
         "code-must-not-change-workdate",
         "custom-document-dispatch-must-not-bypass-report-selections",
@@ -59,7 +78,9 @@
         "reset-ishandled-only-when-the-value-can-carry-over",
         "cmfrt-onbefore-do-onafter",
         "changecompany-runs-triggers-in-the-calling-company",
-        "database-trigger-setup-flags-may-only-be-set-to-true"
+        "database-trigger-setup-flags-may-only-be-set-to-true",
+        "isolated-events-are-isolated-only-outside-a-write-transaction",
+        "isolated-event-rollback-does-not-undo-var-parameters"
       ]
     },
     "finance": {
@@ -91,6 +112,7 @@
         "store-scheduled-task-id-to-avoid-duplicate-tasks",
         "design-covering-keys-from-read-pattern",
         "review-overlapping-keys-before-adding-an-index",
+        "justify-low-selectivity-fields-in-key-columns",
         "setcurrentkey-sets-sort-order-not-index-hint",
         "preserve-buffered-inserts-by-separating-target-reads",
         "aggregate-before-persisting-intermediate-results",
@@ -98,6 +120,7 @@
         "avoid-repeating-unchanged-validation",
         "avoid-get-inside-loop-on-large-table",
         "isempty-before-findset-is-extra-round-trip",
+    "boolean-operators-do-not-short-circuit",
         "query-results-bypass-primary-key-cache",
         "calcsums-instead-of-calcfields-in-loop",
         "use-setautocalcfields-for-per-row-flowfields",
@@ -120,6 +143,8 @@
     "query": {
       "articles": [
         "dataitemtablefilter-cannot-be-overwritten-at-runtime",
+        "every-non-aggregated-query-column-is-a-group-key",
+        "query-dataitems-default-to-left-outer-join",
         "reopening-query-resets-cursor-but-keeps-filters",
         "set-query-filters-before-open",
         "setfilter-overwrites-query-columnfilter"
@@ -131,6 +156,7 @@
         "currreport-break-ends-the-current-trigger",
         "currreport-quit-rolls-back-and-skips-onpostreport",
         "currreport-skip-does-not-stop-trigger-code",
+        "declare-report-layouts-in-the-rendering-section",
         "report-output-in-a-loop-needs-one-client-download",
         "reportextension-dataitem-trigger-order-is-explicit",
         "reportextension-report-triggers-run-after-base-triggers",
@@ -157,7 +183,9 @@
         "al-has-no-built-in-htmlencode",
         "do-not-concatenate-external-text-into-setfilter",
         "exposed-objects-must-be-in-a-permission-set",
-        "cmfrt-license-feature-gate"
+        "cmfrt-license-feature-gate",
+        "page-scope-filters-must-not-be-in-filtergroup-zero",
+        "restore-the-filtergroup-after-setting-hidden-filters"
       ]
     },
     "style": {
@@ -218,7 +246,8 @@
         "check-http-status-before-consuming-response-body",
         "check-json-null-before-converting-values",
         "format-exchanged-values-with-standard-format-9",
-        "api-page-least-privilege-write-access"
+        "api-page-least-privilege-write-access",
+        "set-text-encoding-on-streams-exchanged-externally"
       ]
     }
   }
