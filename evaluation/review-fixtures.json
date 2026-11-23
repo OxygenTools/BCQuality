@@ -204,9 +204,9 @@
     "security": {
       "articles": [
         "al-has-no-built-in-htmlencode",
+        "cmfrt-license-feature-gate",
         "do-not-concatenate-external-text-into-setfilter",
         "exposed-objects-must-be-in-a-permission-set",
-        "cmfrt-license-feature-gate",
         "page-scope-filters-must-not-be-in-filtergroup-zero",
         "restore-the-filtergroup-after-setting-hidden-filters",
         "masktype-conceals-in-the-ui-only"
@@ -258,14 +258,14 @@
     "ui": {
       "articles": [
         "default-descending-sort-on-historical-pages",
+        "cmfrt-tooltip-explains-the-field",
+        "cmfrt-page-teaching-tip-and-search-terms",
+        "cmfrt-promptdialog-systemactions-area",
         "page-design-must-match-bc-page-type-conventions",
         "page-client-expression-must-not-use-in-list",
         "rolecenter-permission-gating-must-use-accessbypermission",
         "notification-recall-needs-known-id",
         "list-page-document-routing-uses-page-management",
-        "cmfrt-tooltip-explains-the-field",
-        "cmfrt-page-teaching-tip-and-search-terms",
-        "cmfrt-promptdialog-systemactions-area",
         "reset-per-row-page-variables-in-onaftergetrecord",
         "navigatepage-footer-actions-need-infooterbar-and-standard-images",
         "register-assisted-setup-on-every-registration-event",
@@ -275,9 +275,9 @@
     "upgrade": {
       "articles": [
         "initvalue-does-not-update-existing-rows",
+        "cmfrt-upgrade-tags-in-upgrade-codeunit",
         "upgrade-tag-logic-must-not-nest-deeply",
         "no-changecompany-in-upgrade",
-        "cmfrt-upgrade-tags-in-upgrade-codeunit",
         "datatransfer-for-bulk-init",
         "datatransfer-skips-triggers-and-subscribers"
       ],
