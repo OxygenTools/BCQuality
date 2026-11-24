@@ -1,6 +1,6 @@
 ---
 bc-version: [all]
-domain: architecture
+domain: query
 keywords: [query, api, blob, column, querytype-api, calcfields, media, createinstream, empty-stream]
 technologies: [al]
 countries: [w1]

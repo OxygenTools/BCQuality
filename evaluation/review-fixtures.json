@@ -167,6 +167,7 @@
     "query": {
       "articles": [
         "dataitemtablefilter-cannot-be-overwritten-at-runtime",
+        "cmfrt-no-blob-column-in-api-query",
         "every-non-aggregated-query-column-is-a-group-key",
         "query-dataitems-default-to-left-outer-join",
         "reopening-query-resets-cursor-but-keeps-filters",
