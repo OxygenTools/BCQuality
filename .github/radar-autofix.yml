@@ -1,0 +1,116 @@
+name: Radar autofix (Custom layer)
+
+# Implements a "review-radar" issue in the Custom layer of this fork.
+#
+# The weekly PR review radar creates one issue per suggestion that targets
+# custom/. When the issue has the label "radar-autofix", this workflow starts
+# Claude Code, which writes or refines the custom article (or the custom review
+# skill) and opens a pull request. The workflow never merges. A person reviews
+# and merges the PR.
+#
+# Start it in one of two ways:
+#   - add the label "radar-autofix" to an open issue, or
+#   - run it by hand (Actions > Radar autofix > Run workflow) with the issue number.
+#
+# Setup (once):
+#   1. Install the Claude GitHub app on OxygenTools/BCQuality
+#      (https://github.com/apps/claude). Its token lets the PR start the
+#      validation workflows. A PR opened with the default GITHUB_TOKEN does not.
+#   2. Add the repository secret ANTHROPIC_API_KEY
+#      (or CLAUDE_CODE_OAUTH_TOKEN and swap the input below).
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: Number of the review-radar issue to implement
+        required: true
+        type: number
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+
+concurrency:
+  group: radar-autofix-${{ github.event.issue.number || inputs.issue_number }}
+  cancel-in-progress: false
+
+jobs:
+  implement:
+    if: >-
+      github.repository == 'OxygenTools/BCQuality' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event.label.name == 'radar-autofix' && github.event.issue.state == 'open'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      ISSUE_NUMBER: ${{ github.event.issue.number || inputs.issue_number }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+
+      - name: Install validator dependencies
+        run: pip install pyyaml jsonschema
+
+      - name: Implement the issue in the Custom layer
+        # Pin this to a commit SHA after the first good run, like the other actions here.
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: >-
+            --max-turns 80
+            --allowedTools "Read,Write,Edit,Glob,Grep,Bash(git:*),Bash(gh issue view:*),Bash(gh issue comment:*),Bash(gh pr create:*),Bash(gh pr list:*),Bash(python .github/scripts/*),Bash(pwsh ./.github/scripts/*),Bash(ls:*)"
+          prompt: |
+            You work in OxygenTools/BCQuality, the Astena fork of microsoft/BCQuality.
+            Implement GitHub issue #${{ env.ISSUE_NUMBER }} in the Custom layer.
+
+            1. Read the issue: gh issue view ${{ env.ISSUE_NUMBER }} --comments
+               Stop with an issue comment, and make no PR, when:
+               - the issue does not have the label "review-radar", or
+               - it has the label "needs-decision", or
+               - an open PR already references it (gh pr list --search "${{ env.ISSUE_NUMBER }} in:body"), or
+               - the proposed rule is unclear or needs a decision by the reviewers.
+               Say in the comment what is missing.
+
+            2. Read before you write:
+               - custom/README.md, docs/customizing-bcquality.md, skills/read.md
+               - the articles and skills the issue names, and 2 or 3 articles in the same custom/knowledge/<domain>/ folder as a model for format and tone
+               - the Microsoft and Community articles the issue names, so the custom article states where it overrides them
+
+            3. Change only files under custom/. Never change microsoft/, community/, skills/, tools/, docs/ or .github/.
+               - A new rule is three files in custom/knowledge/<domain>/: <slug>.md, <slug>.bad.al, <slug>.good.al. The slug starts with "cmfrt-".
+               - A refined rule edits the existing article and its samples.
+               - A reviewer step goes in custom/skills/review/cmfrt-standards-review.md, in the matching worklist section.
+               - Use the same frontmatter keys as the other custom articles.
+               - Write in ASD-STE100 style: active voice, short sentences, no semicolons.
+               - Quote the reviewer comments in Dutch, as the issue gives them. Cite the PR numbers.
+               - The .al samples must be valid AL with CMFRT prefixes.
+               - Use only facts from the issue and from the repository. Do not invent PRs, apps or reviewer statements.
+
+            4. Validate. All must pass:
+               python .github/scripts/validate_frontmatter.py --root .
+               python .github/scripts/test_knowledge_response.py
+               python .github/scripts/test_knowledge_response_semantics.py
+               pwsh ./.github/scripts/Test-KnowledgeIndex.ps1 -Root .
+               pwsh ./.github/scripts/Test-SkillIndex.ps1 -Root .
+
+            5. Create the branch radar/issue-${{ env.ISSUE_NUMBER }}, commit, push, and open a PR to main with gh pr create.
+               - Title: the issue title without the "[Radar Sxx]" prefix.
+               - Body: fill .github/pull_request_template.md. Leave the cmfrt-lint checkboxes open. Under that section, propose the
+                 selftest list (LINTED, COMPILER or REVIEWER) for each new or changed article, with one sentence why.
+                 The lint lives in PlaybookConfig on Azure DevOps. Do not try to change it.
+               - End the body with "Closes #${{ env.ISSUE_NUMBER }}".
+               Never merge, approve or close anything.
+
+            6. Comment on the issue with the PR link and one line per changed file.
