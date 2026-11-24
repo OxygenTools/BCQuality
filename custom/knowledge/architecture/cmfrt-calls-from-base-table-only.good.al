@@ -104,3 +104,48 @@ codeunit 2045731 "CMFRT ST ShowServOrdersMeth"
     begin
     end;
 }
+
+// A second pair in a feature folder is allowed (PR 14793). The shell only calls the Impl codeunit.
+codeunit 55050 "CMFRT WDS QuoteLay Subscribers"
+{
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', false, false)]
+    local procedure CMFRTWDSOnAfterPostSalesDoc(var SalesHeader: Record "Sales Header")
+    var
+        CMFRTWDSQuoteLaySubscribersImpl: Codeunit "CMFRT WDS QuoteLay SubscribersImpl";
+    begin
+        CMFRTWDSQuoteLaySubscribersImpl.CMFRTWDSOnAfterPostSalesDoc(SalesHeader);
+    end;
+}
+
+// The Impl codeunit of the pair holds the OnBefore/Do/OnAfter bracket.
+codeunit 55051 "CMFRT WDS QuoteLay SubscribersImpl"
+{
+    procedure CMFRTWDSOnAfterPostSalesDoc(var SalesHeader: Record "Sales Header")
+    var
+        IsHandled: Boolean;
+    begin
+        OnBeforeCMFRTWDSOnAfterPostSalesDoc(SalesHeader, IsHandled);
+        DoCMFRTWDSOnAfterPostSalesDoc(SalesHeader, IsHandled);
+        OnAfterCMFRTWDSOnAfterPostSalesDoc(SalesHeader);
+    end;
+
+    local procedure DoCMFRTWDSOnAfterPostSalesDoc(var SalesHeader: Record "Sales Header"; IsHandled: Boolean)
+    var
+        SalesLine: Record "Sales Line";
+    begin
+        if IsHandled then
+            exit;
+        SalesLine.SetRange("Document No.", SalesHeader."No.");
+        SalesLine.ModifyAll("Qty. to Ship", 0);
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnBeforeCMFRTWDSOnAfterPostSalesDoc(var SalesHeader: Record "Sales Header"; var IsHandled: Boolean)
+    begin
+    end;
+
+    [IntegrationEvent(false, false)]
+    local procedure OnAfterCMFRTWDSOnAfterPostSalesDoc(var SalesHeader: Record "Sales Header")
+    begin
+    end;
+}
