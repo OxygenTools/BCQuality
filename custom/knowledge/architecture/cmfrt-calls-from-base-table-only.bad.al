@@ -37,3 +37,17 @@ tableextension 2045730 "CMFRT ST Purchase Header" extends "Purchase Header"
         end;
     end;
 }
+
+// Feature-folder subscriber holds the logic itself (PR 14793). There is no Impl
+// codeunit, and no OnBefore/Do/OnAfter bracket for a dependent extension.
+codeunit 55050 "CMFRT WDS QuoteLay Subscribers"
+{
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", 'OnAfterPostSalesDoc', '', false, false)]
+    local procedure CMFRTWDSOnAfterPostSalesDoc(var SalesHeader: Record "Sales Header")
+    var
+        SalesLine: Record "Sales Line";
+    begin
+        SalesLine.SetRange("Document No.", SalesHeader."No.");
+        SalesLine.ModifyAll("Qty. to Ship", 0);
+    end;
+}
