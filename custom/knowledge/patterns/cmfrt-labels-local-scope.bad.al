@@ -14,5 +14,12 @@ codeunit 55026 "CMFRT AQ ServiceWarehouseMeth"
             exit;
         // ... create orders ...
         Message(TransferOrdersCreatedMsg, 'T-001', 'T-002');
+        // The call code is a technical text literal. It needs a locked label.
+        CMFRTAQCallService('V1');
+    end;
+
+    local procedure CMFRTAQCallService(CallCode: Code[10])
+    begin
+        // ... call the service ...
     end;
 }
