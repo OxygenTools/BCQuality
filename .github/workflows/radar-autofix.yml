@@ -70,7 +70,7 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           claude_args: >-
             --max-turns 80
-            --allowedTools "Read,Write,Edit,Glob,Grep,Bash(git:*),Bash(gh issue view:*),Bash(gh issue comment:*),Bash(gh pr create:*),Bash(gh pr list:*),Bash(python .github/scripts/*),Bash(pwsh ./.github/scripts/*),Bash(ls:*)"
+            --allowedTools "Read,Write,Edit,Glob,Grep,Bash(git:*),Bash(gh issue view:*),Bash(gh issue comment:*),Bash(gh pr create:*),Bash(gh pr list:*),Bash(python .github/scripts/*),Bash(pwsh ./.github/scripts/*),Bash(pwsh ./tools/Test-Review*),Bash(ls:*)"
           prompt: |
             You work in OxygenTools/BCQuality, the Astena fork of microsoft/BCQuality.
             Implement GitHub issue #${{ env.ISSUE_NUMBER }} in the Custom layer.
@@ -88,15 +88,23 @@ jobs:
                - the articles and skills the issue names, and 2 or 3 articles in the same custom/knowledge/<domain>/ folder as a model for format and tone
                - the Microsoft and Community articles the issue names, so the custom article states where it overrides them
 
-            3. Change only files under custom/. Never change microsoft/, community/, skills/, tools/, docs/ or .github/.
+            3. Change only files under custom/, plus evaluation/review-fixtures.json as step 3a says.
+               Never change microsoft/, community/, skills/, tools/, docs/ or .github/.
                - A new rule is three files in custom/knowledge/<domain>/: <slug>.md, <slug>.bad.al, <slug>.good.al. The slug starts with "cmfrt-".
                - A refined rule edits the existing article and its samples.
                - A reviewer step goes in custom/skills/review/cmfrt-standards-review.md, in the matching worklist section.
                - Use the same frontmatter keys as the other custom articles.
                - Write in ASD-STE100 style: active voice, short sentences, no semicolons.
                - Quote the reviewer comments in Dutch, as the issue gives them. Cite the PR numbers.
-               - The .al samples must be valid AL with CMFRT prefixes.
+               - The .al samples must be valid AL with CMFRT prefixes. Object and member IDs follow
+                 custom/knowledge/naming/cmfrt-object-id-ranges: 55000-55999 for a customer (ZC_) app,
+                 2045081-2046580 for a product app. Pick an ID that no other custom sample uses.
                - Use only facts from the issue and from the repository. Do not invent PRs, apps or reviewer statements.
+
+            3a. A new or changed article with .bad.al and .good.al samples must be in the review evaluation.
+               Add its slug (without .md) to overrides.<domain>.articles in evaluation/review-fixtures.json,
+               next to the other cmfrt- slugs of that domain. Add a coverageWaivers entry instead only when the
+               good and bad samples differ only in comments, or only a diff can show the defect. Give the reason.
 
             4. Validate. All must pass:
                python .github/scripts/validate_frontmatter.py --root .
@@ -104,6 +112,10 @@ jobs:
                python .github/scripts/test_knowledge_response_semantics.py
                pwsh ./.github/scripts/Test-KnowledgeIndex.ps1 -Root .
                pwsh ./.github/scripts/Test-SkillIndex.ps1 -Root .
+               git diff --name-only origin/main...HEAD > "$RUNNER_TEMP/changed-paths.txt"
+               pwsh ./tools/Test-ReviewFixtures.ps1 -Root . -PrepareDirectory "$RUNNER_TEMP/fixtures" -ChangedPathsFile "$RUNNER_TEMP/changed-paths.txt"
+               pwsh ./tools/Test-ReviewFixtureContexts.ps1 -Root .
+               Commit first, so the git diff sees your changes.
 
             5. Create the branch radar/issue-${{ env.ISSUE_NUMBER }}, commit, push, and open a PR to main with gh pr create.
                - Title: the issue title without the "[Radar Sxx]" prefix.
