@@ -1,4 +1,4 @@
-pageextension 2045680 "CMFRT AQ Posted Rcpt Subform" extends "Posted Purchase Rcpt. Subform"
+pageextension 55120 "CMFRT AQ Posted Rcpt Subform" extends "Posted Purchase Rcpt. Subform"
 {
     layout
     {
